@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * @author Ernesto Echeverría González
+ * @since 17/04/2018
+ *
+ */
 public class Point {
 	private int x;
 	private int y;
