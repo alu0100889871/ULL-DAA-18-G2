@@ -44,8 +44,6 @@ public class VnsBasica {
 	       *  X Y -> coordenadas de localizaciones
 	       *  ND -> nº de clientes de D.
 	       *  X Y -> coordenadas de demandantes ( clientes)
-	       * 
-	       * 
 	       */
 	      try {
 	         // Apertura del fichero y creacion de BufferedReader para poder
@@ -56,7 +54,7 @@ public class VnsBasica {
 
 	         // Lectura del fichero
 	         
-	         
+	         System.out.println("hola mundo");
 	         String linea;
 	         StringTokenizer token;
 
