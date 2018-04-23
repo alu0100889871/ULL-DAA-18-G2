@@ -1,14 +1,35 @@
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author Sebastián José Díaz Rodríguez
+ * @author Ernesto Echeverría González
+ * @author Norberto García Gaspar
+ * @author Victoria Quintana Martí
+ * 
+ * @version 1.0.0
+ * @since 17/04/2018
+ *
+ * Definition of a p-center Problem.
+ *
+ */
 public class PCenterProblem {
 	private Matrix values;
 	private Solution solution;
 	
+	/**
+	 * Constructor of a p-center Problem.
+	 * @param k int number of services.
+	 * @param dots ArrayList<Point> array with all the client nodes.
+	 */
 	public PCenterProblem(int k, ArrayList<Point> dots) {
 		this.values = new Matrix(dots);
 		this.solution = new Solution(k, new ArrayList<Point>());
 	}
 	
+	/**
+	 * Constructor using a file.
+	 * @param path String file path.
+	 */
 	public PCenterProblem(String path) {
 		PCenterProblem pcp = new PCenterProblemReader(path).generate();
 		this.values = new Matrix(pcp.getValues().getDots());
@@ -17,37 +38,37 @@ public class PCenterProblem {
 	
 	/**
 	 * Getter of the matrix that stores the distances.
-	 * @return Matrix
+	 * @return Matrix matrix of the problem.
 	 */
 	public Matrix getValues() {
 		return values;
 	}
 	/**
 	 * Setter of Matrix that stores the distances between the nodes.
-	 * @param Matrix entry matrix of the problem.
+	 * @param values Matrix entry matrix of the problem.
 	 */
 	public void setValues(Matrix values) {
 		this.values = values;
 	}
 	/**
-	 * Getter of the p-center problem solution stored
-	 * @return solution stored
+	 * Getter of the p-center problem solution stored.
+	 * @return Solution solution stored.
 	 */
 	public Solution getSolution() {
 		return solution;
 	}
 	/**
-	 * Setter of the p-center problem solution
-	 * @param solution to store
+	 * Setter of the p-center problem solution.
+	 * @param solution Solution solution to store.
 	 */
 	public void setSolution(Solution solution) {
 		this.solution = solution;
 	}
 	/**
-	 * Method to calculate de objective function of the problem, given a list of services and clients
-	 * @param services service nodes selected for the problem definition
-	 * @param clients client nodes selected for the problem definition
-	 * @return the result of the objective function
+	 * Method to calculate the objective function of the problem, given a list of services and clients.
+	 * @param services ArrayList<Integer> service nodes selected for the problem definition.
+	 * @param clients ArrayList<Integer> client nodes selected for the problem definition.
+	 * @return double the result of the objective function.
 	 */
 	public double funcionObjectivo(ArrayList<Integer> services, ArrayList<Integer> clients) {
 		ArrayList<Double> distances = new ArrayList<Double>();
