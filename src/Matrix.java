@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Matrix {
 	ArrayList<Point> dots;
-	ArrayList<ArrayList<Double> > distances; 
+	ArrayList<ArrayList<Double> > distances;
 	
 	/**
 	 * Matrix constructor.
@@ -62,10 +62,15 @@ public class Matrix {
 	}
 	
 	/**
-	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 * Getter of an element of the matrix half stored in matrix
+	 * x == y states the diagonal of the matrix. Zero in every case.
+	 * x > y states that the diagonal hasn't been trespassed
+	 * x < y states that the diagonal has been trespassed and therefore consider the zero of the diagonal
+	 * After the correction of the space, if x < y, they are inverted in order to search for the element
+	 * in the stored matrix half.
+	 * @param x index of the service
+	 * @param y index of the client
+	 * @return distance between the service and the client dispensed
 	 */
 	public double getDistance(int x, int y) {
 		if (x == y)
@@ -84,9 +89,11 @@ public class Matrix {
 	}
 	
 	/**
-	 * 
-	 * @param locationIndexes
-	 * @return
+	 * Getter of the submatrix formed by the possible locations in order
+	 * to set the problem input.
+	 * @param locationIndexes indexes of the possible locations in the matrix
+	 * @return a submatrix of the arrays of distances between the service nodes
+	 *  selected with the locationIndexes and their distances with the rest of the points
 	 */
 	public ArrayList<ArrayList<Double>> getSubmatrix(ArrayList<Integer> locationIndexes){
 		ArrayList<ArrayList<Double>> submatrix = new ArrayList<ArrayList<Double>>();

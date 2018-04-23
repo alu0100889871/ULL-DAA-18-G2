@@ -14,7 +14,8 @@ import java.util.ArrayList;
  */
 public class Solution {
 	private ArrayList<Point> solution;
-	private int k;					   
+	private int k;
+	private double fobj;					   
 	
 	/**
 	 * Solution default constructor.
@@ -59,6 +60,20 @@ public class Solution {
 	 */
 	public void setK(int k) { 
 		this.k = k; 
+	}
+	/**
+	 * Getter of the result stored of the last goal evaluated.
+	 * @return double max distance between services nodes and client nodes selected to define the problem.
+	 */
+	public double getFobj() {
+		return fobj;
+	}
+	/**
+	 * Setter of the value of the objective function
+	 * @param fobj value to set the internal objective function value
+	 */
+	public void setFobj(double fobj) {
+		this.fobj = fobj;
 	}
 	/**
 	 * toString method
