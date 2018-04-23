@@ -29,5 +29,5 @@ que componen los conjuntos.
 ## Autores
 * Ernesto Echevarria Gonzalez.
 * Sebastian José Díaz Rodriguez.
-* Victoria Quintana Martín.
+* Victoria Quintana Martí.
 * Norberto García Gaspar.
