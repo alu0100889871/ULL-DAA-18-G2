@@ -191,13 +191,10 @@ public class GRASP {
 		Solution best_sol = new Solution(max_localizations,new ArrayList<Integer>());
 		for (int i = 0; i < max_iterations; i++) {
 			Solution candidate_sol = GreedyRandomizedConstruction(m,localizations,max_localizations, max_iterations, max_no_improv, greediness_factor);
-			System.out.println(" Geedy Solution= " + candidate_sol.getCostSolution());
 			candidate_sol = localSearch(candidate_sol, m, localizations, max_localizations, max_no_improv);
-			System.out.println(" Local Search Solution= " + candidate_sol.getCostSolution());
 	        if ((best_sol.getCostSolution() == 0) || (candidate_sol.getCostSolution() < best_sol.getCostSolution())) {
 	        	best_sol = candidate_sol;
 	        }
-	        System.out.println(" > Iteration " + (i + 1) + ": Best= " + best_sol.getCostSolution());
 		}
 
 		return best_sol;
