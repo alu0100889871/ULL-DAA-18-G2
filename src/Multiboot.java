@@ -22,7 +22,16 @@ public class Multiboot {
 	public Multiboot(int parameter) {
 		this.parameter = parameter;
 	}
-	
+	/**
+	 * 
+	 * @param m
+	 * @param localizations
+	 * @param max_localizations
+	 * @param max_iterations
+	 * @param max_no_improv
+	 * @param greediness_factor
+	 * @return
+	 */
 	public Solution run(Matrix m, ArrayList<Integer> localizations, int max_localizations, int max_iterations, int max_no_improv, double greediness_factor) {
 		// Generating solution
 		Solution grasp = GRASP.Grasp(m, localizations, max_localizations, max_iterations, max_no_improv, greediness_factor);
@@ -42,7 +51,13 @@ public class Multiboot {
 		}
 		return grasp;
 	}
-	
+	/**
+	 * 
+	 * @param services
+	 * @param clients
+	 * @param m
+	 * @return
+	 */
 	public double objectiveFunction(ArrayList<Integer> services, ArrayList<Integer> clients, Matrix m) {
 		ArrayList<Double> distances = new ArrayList<Double>();
 		for(int i = 0; i < clients.size(); i++) {
