@@ -23,7 +23,7 @@ public class PCenterProblem {
 	 */
 	public PCenterProblem(int k, ArrayList<Point> dots) {
 		this.values = new Matrix(dots);
-		this.solution = new Solution(k, new ArrayList<Point>());
+		this.solution = new Solution(k, new ArrayList<Integer>());
 	}
 	
 	/**
