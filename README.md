@@ -24,7 +24,7 @@ que componen los conjuntos.
 
 ## Enlace de interes.
 
-[Informe aquí.](https://www.overleaf.com/15253862jfjgbqkcmgvw#/57706795/)
+[Informe](./report/problema-del-p.pdf)
 
 ## Autores
 * Ernesto Echevarria Gonzalez.
