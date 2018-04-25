@@ -106,6 +106,14 @@ public class Matrix {
 		}
 		return submatrix;
 	}
+	/**
+	 * Getter of the submatrix formed by the possible locations and clients in order
+	 * to set the problem input.
+	 * @param localizations indexes of the possible locations in the matrix
+	 * @param submatrix submatrix with the services without filtering non-needed clients
+	 * @return submatrix of the arrays of distances between the service nodes
+	 *  selected with the localizations and submatrix
+	 */
 	public ArrayList<ArrayList<Double>> getSubmatrixClientLocalizations(ArrayList<ArrayList<Double>> submatrix, ArrayList<Integer> localizations){
 		ArrayList<ArrayList<Double>> aux = new ArrayList<ArrayList<Double>>();
 		boolean take_number = true;

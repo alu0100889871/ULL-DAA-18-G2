@@ -22,10 +22,9 @@ public class PCenterProblem {
 	 * @param dots ArrayList<Point> array with all the client nodes.
 	 */
 	public PCenterProblem(int k, ArrayList<Point> dots) {
+		this.solution = new Solution(k, dots);
 		this.values = new Matrix(dots);
-		this.solution = new Solution(k, new ArrayList<Integer>());
 	}
-	
 	/**
 	 * Constructor using a file.
 	 * @param path String file path.
@@ -65,19 +64,39 @@ public class PCenterProblem {
 		this.solution = solution;
 	}
 	/**
-	 * Method to calculate the objective function of the problem, given a list of services and clients.
-	 * @param services ArrayList<Integer> service nodes selected for the problem definition.
-	 * @param clients ArrayList<Integer> client nodes selected for the problem definition.
-	 * @return double the result of the objective function.
+	 * Método para el cálculo de la función objetivo según la solución establecida previamente
+	 * @return el total de la solución obtenida. Es decir, la distancia máxima desde los servicios a los clientes
 	 */
-	public double funcionObjectivo(ArrayList<Integer> services, ArrayList<Integer> clients) {
+	public double funcionObjectivo() {
 		ArrayList<Double> distances = new ArrayList<Double>();
-		for(int i = 0; i < clients.size(); i++) {
+		for(int i = getSolution().getK(); i < solution.getDots().size(); i++) {
 			double min = Double.MAX_VALUE;
-			for(int j = 0; j < services.size(); j++) {
-				if(services.get(j) < values.getDots().size() && clients.get(i) < values.getDots().size() 
-						&& min > values.getDistance(services.get(j), clients.get(i))){
-					min = values.getDistance(services.get(j), clients.get(i));
+			for(int j = 0; j < getSolution().getK(); j++) {
+				if(min > values.getDistance(j, i)){
+					min = values.getDistance(j, i);
+				}
+			}
+			distances.add(min);
+		}
+		double max = Double.MIN_VALUE;
+		for (int i = 0; i < distances.size(); i++) {
+			if(max < distances.get(i)) {
+				max = distances.get(i);
+			}
+		}
+		return max;
+	}
+	/**
+	 * Método para el cálculo de la función objetivo en función de unos nodos clientes
+	 * @return el total de la solución obtenida. Es decir, la distancia máxima desde los servicios a los clientes
+	 */
+	public double funcionObjectivo(ArrayList<Point> servicesDots) {
+		ArrayList<Double> distances = new ArrayList<Double>();
+		for(int i = getSolution().getK(); i < solution.getDots().size(); i++) {
+			double min = Double.MAX_VALUE;
+			for(int j = 0; j < servicesDots.size(); j++) {
+				if(min > values.getDistance(getSolution().getDots().indexOf(servicesDots.get(j)), i)){
+					min = values.getDistance(j, i);
 				}
 			}
 			distances.add(min);
