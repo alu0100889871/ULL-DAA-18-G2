@@ -69,15 +69,17 @@ public class PCenterProblem {
 	 */
 	public double funcionObjectivo() {
 		ArrayList<Double> distances = new ArrayList<Double>();
-		for(int i = getSolution().getK(); i < solution.getDots().size(); i++) {
+		for(int i = 0; i < getSolution().getDots().size(); i++) {
 			double min = Double.MAX_VALUE;
 			for(int j = 0; j < getSolution().getK(); j++) {
-				if(min > values.getDistance(j, i)){
-					min = values.getDistance(j, i);
+				int index = getValues().getDots().indexOf(getSolution().getDots().get(j));
+				if(min > getValues().getDistance(index, i)){
+					min = getValues().getDistance(index, i);
 				}
 			}
 			distances.add(min);
 		}
+		
 		double max = Double.MIN_VALUE;
 		for (int i = 0; i < distances.size(); i++) {
 			if(max < distances.get(i)) {
@@ -92,11 +94,12 @@ public class PCenterProblem {
 	 */
 	public double funcionObjectivo(ArrayList<Point> servicesDots) {
 		ArrayList<Double> distances = new ArrayList<Double>();
-		for(int i = getSolution().getK(); i < solution.getDots().size(); i++) {
+		for(int i = 0; i < getValues().getDots().size(); i++) {
 			double min = Double.MAX_VALUE;
 			for(int j = 0; j < servicesDots.size(); j++) {
-				if(min > values.getDistance(getSolution().getDots().indexOf(servicesDots.get(j)), i)){
-					min = values.getDistance(j, i);
+				int index = getValues().getDots().indexOf(servicesDots.get(j));
+				if(min > getValues().getDistance(index, i)){
+					min = getValues().getDistance(index, i);
 				}
 			}
 			distances.add(min);
@@ -118,5 +121,12 @@ public class PCenterProblem {
 		System.out.println(pcp.getValues());
 		System.out.println("K:" + pcp.getSolution().getK());
 		System.out.println("Dots: " + pcp.getValues().getDots());
+		ArrayList<Point> solution = new ArrayList<Point>();
+		solution.add(new Point(2,3));
+		solution.add(new Point(10,17));
+		solution.add(new Point(8,14));
+		System.out.println(solution);
+		System.out.println(pcp.getValues().getDots().indexOf(new Point(8,14)));
+		System.out.println("objF = " + pcp.funcionObjectivo(solution));
 	}
 }

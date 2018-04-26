@@ -12,26 +12,28 @@ public class GRASPAlgorithm extends Algorithm{
 	public ArrayList<Point> resolve() {
     	ArrayList<Point> solution = new ArrayList<Point>();
     	for (int i = 0; i < getPcp().getSolution().getK(); i++) {
-    		//CAMBIAR POR GRASPSELECTION EN FUNCIÓN DEL RCLSIZE Y APLICAR BUSQUEDA LOCAL
-    		solution = new ArrayList<Point>(this.makeOrderedCombinations(solution).get(0));
+    		solution = new ArrayList<Point>(nextGRASPSelected(solution));
+    		solution = new LocalSearchMaker(getPcp()).exhaustiveSingleLocationChangeSearch(solution);
     	}
     	getPcp().getSolution().setBestFObj(getPcp().funcionObjectivo(solution));
     	getPcp().getSolution().setDots(solution);
     	return solution;
     }
 	
+	public ArrayList<Point> nextGRASPSelected(ArrayList<Point> initialSolution) {
+		ArrayList<ArrayList<Point>> combinations = this.makeOrderedCombinations(initialSolution);
+		int randomSelected = (int) (Math.random() * RCLSize);
+		return combinations.get(randomSelected);
+	}
+	
 	public static void main(String args[]) {
 		PCenterProblem pcp = new PCenterProblem(args[0]);
-		GRASPAlgorithm ga = new GRASPAlgorithm(pcp, 2);
-		/*
-		System.out.println(ga.makeOrderedCombinations(new ArrayList<Point>()));
-		while(ga.getOrderedCombinations().get(0).size() < ga.getPcp().getSolution().getK()) {
-			System.out.println(ga.makeOrderedCombinations(ga.getOrderedCombinations().get(0)));
-		}
-		*/
+		GRASPAlgorithm ga = new GRASPAlgorithm(pcp, 3);
+		
 		ArrayList<Point> solution = ga.resolve();
-		System.out.println("Solucion = " + solution);
-		System.out.println("Funcion Objetivo = " + ga.getPcp().getSolution().getBestFObj());
+		System.out.println(solution);
+    	System.out.println(ga.getPcp().funcionObjectivo(solution));
+    	
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < ga.getPcp().getSolution().getDots().size(); i++) {
 			locations.add(ga.getPcp().getValues().getDots().indexOf(solution.get(i)));
@@ -41,5 +43,8 @@ public class GRASPAlgorithm extends Algorithm{
 		for(int i = 0; i < submatrix.size(); i++) {
 			System.out.println(submatrix.get(i));
 		}
+		System.out.println("==========================================================================");
+		System.out.println(ga.getPcp().getValues());
+		System.out.println(locations);
 	}
 }

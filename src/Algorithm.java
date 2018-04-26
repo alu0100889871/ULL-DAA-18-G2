@@ -99,12 +99,12 @@ public class Algorithm {
         while (i <= j) {
             // If the current value from the left list is smaller than the pivot
             // element then get the next element from the left list
-            while (getPcp().funcionObjectivo(getOrderedCombinations().get(i)) > pivot) {
+            while (getPcp().funcionObjectivo(getOrderedCombinations().get(i)) < pivot) {
                 i++;
             }
             // If the current value from the right list is larger than the pivot
             // element then get the next element from the right list
-            while (getPcp().funcionObjectivo(getOrderedCombinations().get(j)) < pivot) {
+            while (getPcp().funcionObjectivo(getOrderedCombinations().get(j)) > pivot) {
                 j--;
             }
 
