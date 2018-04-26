@@ -15,7 +15,10 @@ public class Algorithm {
 	private PCenterProblem pcp;
 	private ArrayList<ArrayList<Point>> combinations;
 	private ArrayList<ArrayList<Point>> orderedCombinations;
-	
+	/**
+	 * Método constructor
+	 * @param pcp problema del p-centro a resolver
+	 */
 	public Algorithm(PCenterProblem pcp) {
 		this.pcp = new PCenterProblem(pcp.getSolution().getK(), pcp.getValues().getDots());
 		combinations = new ArrayList< ArrayList<Point>>();
@@ -51,7 +54,10 @@ public class Algorithm {
 		getKCombinations(combis);
 		return sortCombinations();
 	}
-	
+	/**
+	 * Método para la ordenación del array de combinaciones interno
+	 * @return array de combinaciones interno
+	 */
 	public ArrayList<ArrayList<Point>> sortCombinations(){
 		ArrayList<ArrayList<Point>> temp = new ArrayList<ArrayList<Point>>(getOrderedCombinations());
 		setOrderedCombinations(new ArrayList<ArrayList<Point>>(getCombinations()));
@@ -63,7 +69,14 @@ public class Algorithm {
         }
 		return getOrderedCombinations();
 	}
-	
+	/**
+	 * Método para la generación de un array de combinaciones de tamaño n + 1, siendo n
+	 * el tamaño del que se compone el array de entrada. En este mismo array se basa la
+	 * búsqueda de combinaciones, dando todas las combinaciones entre el array de entrada
+	 * y cada uno de los elementos que están fuera del mismo.
+	 * @param combis combinación de elementos inicial
+	 * @return ArrayList<ArrayList<Point>> array de combinaciones
+	 */
 	public ArrayList<ArrayList<Point>> getKCombinations(ArrayList<Point> combis) {
 		ArrayList<ArrayList<Point>> aux = new ArrayList<ArrayList<Point>>();
 		if(combis.size() < 1) {
@@ -86,7 +99,11 @@ public class Algorithm {
 		this.setCombinations(combinations);
 		return combinations;
 	}
-	
+	/**
+	 * Método aplicado para la ordenación recursiva de los elementos del array de combinaciones
+	 * @param low índice menor de la zona del array a considerar para la ordenación
+	 * @param high índice mayor de la zona del array a considerar para la ordenación
+	 */
 	private void quicksort(int low, int high) {
         int i = low, j = high;
         // Get the pivot element from the middle of the list
@@ -124,7 +141,11 @@ public class Algorithm {
         if (i < high)
             quicksort(i, high);
     }
-
+	/**
+	 * Método para el intercambio de combinaciones dentro del array ordenado
+	 * @param i índice de posición a intercambiar desde la izquierda a la derecha
+	 * @param j índice de posición a intercambiar desde la derecha a la izquierda
+	 */
     private void exchange(int i, int j) {
         ArrayList<Point> temp = new ArrayList<Point>(getOrderedCombinations().get(i));
         getOrderedCombinations().set(i, getOrderedCombinations().get(j));

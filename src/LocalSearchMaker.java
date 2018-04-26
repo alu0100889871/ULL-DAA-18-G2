@@ -20,7 +20,14 @@ public class LocalSearchMaker extends Algorithm {
 	public LocalSearchMaker(PCenterProblem pcp) {
 		super(pcp);
 	}
-
+	/**
+	 * Búsqueda exhaustiva de la mejor solución vecina a la solución inicial.
+	 * Al haber una mejora, esta se vuelve la solución inicial y se comienza
+	 * el proceso de nuevo. Así hasta que sea la mejor solución de su entorno.
+	 * 
+	 * @param initialSolution solución inicial dispensada como punto de partida de la búsqueda
+	 * @return nueva solución mejorada, en caso de haberla
+	 */
 	public ArrayList<Point> exhaustiveSingleLocationChangeSearch(ArrayList<Point> initialSolution){
 		boolean upgraded = true;
 		ArrayList<Point> actualSolution = new ArrayList<Point>(initialSolution);
