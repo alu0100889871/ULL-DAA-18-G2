@@ -19,23 +19,15 @@ public class GreedyAlgorithm extends Algorithm{
 	public static void main(String args[]) {
 		PCenterProblem pcp = new PCenterProblem(args[0]);
 		GreedyAlgorithm ga = new GreedyAlgorithm(pcp);
-		/*
-		System.out.println(ga.makeOrderedCombinations(new ArrayList<Point>()));
-		while(ga.getOrderedCombinations().get(0).size() < ga.getPcp().getSolution().getK()) {
-			System.out.println(ga.makeOrderedCombinations(ga.getOrderedCombinations().get(0)));
-		}
-		*/
+		
 		ArrayList<Point> solution = ga.resolve();
-		System.out.println("Solucion = " + solution);
-		System.out.println("Funcion Objetivo = " + ga.getPcp().getSolution().getBestFObj());
+		System.out.println("SOLUTION POINTS = " + solution);
+    	System.out.println("OBJECTIVE FUNCTION = " + ga.getPcp().funcionObjectivo(solution));
+    	
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < ga.getPcp().getSolution().getDots().size(); i++) {
 			locations.add(ga.getPcp().getValues().getDots().indexOf(solution.get(i)));
 		}
-		ArrayList<ArrayList<Double>> submatrix = ga.getPcp().getValues().getSubmatrix(locations);
-		System.out.println("==========================================================================");
-		for(int i = 0; i < submatrix.size(); i++) {
-			System.out.println(submatrix.get(i));
-		}
+		System.out.println("INDEXES = " + locations);
 	}
 }

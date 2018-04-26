@@ -31,20 +31,13 @@ public class GRASPAlgorithm extends Algorithm{
 		GRASPAlgorithm ga = new GRASPAlgorithm(pcp, 3);
 		
 		ArrayList<Point> solution = ga.resolve();
-		System.out.println(solution);
-    	System.out.println(ga.getPcp().funcionObjectivo(solution));
+		System.out.println("SOLUTION POINTS = " + solution);
+    	System.out.println("OBJECTIVE FUNCTION = " + ga.getPcp().funcionObjectivo(solution));
     	
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < ga.getPcp().getSolution().getDots().size(); i++) {
 			locations.add(ga.getPcp().getValues().getDots().indexOf(solution.get(i)));
 		}
-		ArrayList<ArrayList<Double>> submatrix = ga.getPcp().getValues().getSubmatrix(locations);
-		System.out.println("==========================================================================");
-		for(int i = 0; i < submatrix.size(); i++) {
-			System.out.println(submatrix.get(i));
-		}
-		System.out.println("==========================================================================");
-		System.out.println(ga.getPcp().getValues());
-		System.out.println(locations);
+		System.out.println("INDEXES = " + locations);
 	}
 }
