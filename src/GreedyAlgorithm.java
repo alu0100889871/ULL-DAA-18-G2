@@ -39,14 +39,29 @@ public class GreedyAlgorithm extends Algorithm{
     	getPcp().getSolution().setDots(solution);
     	return solution;
     }
+    
+    public ArrayList<Point> resolve2() {
+    	ArrayList<ArrayList<Point>> combs = new ArrayList<ArrayList<Point>>(getCombinations(getPcp().getSolution().getK()));
+    	ArrayList<Point> solution = new ArrayList<Point>();
+    	while(!combs.isEmpty()) {
+    		if(getPcp().funcionObjectivo(solution) > getPcp().funcionObjectivo(combs.get(0))) {
+    			solution = new ArrayList<Point>(combs.get(0));
+    		}
+    		combs.remove(0);
+    	}
+    	getPcp().getSolution().setBestFObj(getPcp().funcionObjectivo(solution));
+    	getPcp().getSolution().setDots(solution);
+    	return solution;
+    }
+    
     //------------------------------------------------------------------------------------------//
   	//--------------------------------------TEST SECTION----------------------------------------//
   	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
 		PCenterProblem pcp = new PCenterProblem(args[0]);
 		GreedyAlgorithm ga = new GreedyAlgorithm(pcp);
-		
-		ArrayList<Point> solution = ga.resolve();
+		//ArrayList<Point> solution = ga.resolve();
+		ArrayList<Point> solution = ga.resolve2();
 		System.out.println("SOLUTION POINTS = " + solution);
     	System.out.println("OBJECTIVE FUNCTION = " + ga.getPcp().funcionObjectivo(solution));
     	

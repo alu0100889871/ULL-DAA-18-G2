@@ -34,6 +34,11 @@ public class GRASPAlgorithm extends Algorithm{
 	 * 		3. Mejora de la solución actual mediante búsqueda local exhaustiva
 	 * @return solucion final, un ArrayList\<Point\>
 	 */
+	/*
+	 * No consigue el óptimo ya que la decisión por la que se toma el inicial es mala
+	 * ¿Path-relinking? ¿Elección de soluciones tal y como está? -> la profesora dice de ir cogiendo el punto que está más alejado del resto
+	 * Faltaría hacer la comparación de las distancia y tomar el siguiente punto
+	 */
 	public ArrayList<Point> resolve() {
     	ArrayList<Point> solution = new ArrayList<Point>();
     	for (int i = 0; i < getPcp().getSolution().getK(); i++) {
@@ -51,9 +56,39 @@ public class GRASPAlgorithm extends Algorithm{
 	 * @return ArrayList\<Point\>, solución con el elemento añadido
 	 */
 	public ArrayList<Point> nextGRASPSelected(ArrayList<Point> initialSolution) {
-		ArrayList<ArrayList<Point>> combinations = this.makeOrderedCombinations(initialSolution);
-		int randomSelected = (int) (Math.random() * RCLSize);
-		return combinations.get(randomSelected);
+		if(initialSolution.size() < 1) {
+			initialSolution.add(getPcp().getValues().getDots().get((int)(Math.random() * getPcp().getValues().getDots().size() ) ) );
+			return initialSolution;
+		}
+		ArrayList<Double> distances = new ArrayList<Double>();
+		for(int i = 0; i < getPcp().getValues().getDots().size(); i++) {
+			distances.add(getServicesDistance(initialSolution, getPcp().getValues().getDots().get(i)));
+		}
+		ArrayList<Point> RCLList = new ArrayList<Point>();
+		for(int j = 0; j < RCLSize; j++) {
+			int index = 0;
+			double distance = 0.0;
+			for(int i = 0; i < distances.size(); i++) {
+				if(distance < distances.get(i)) {
+					index = i;
+					distance = distances.get(i);
+					distances.set(i, -1.0);
+				}
+			}
+			RCLList.add(getPcp().getValues().getDots().get(index));
+		}
+		ArrayList<Point> graspSelectedSolution = new ArrayList<Point>(initialSolution);
+		graspSelectedSolution.add(RCLList.get((int) (Math.random() * RCLList.size()) ) );
+		return graspSelectedSolution;
+	}
+	
+	public double getServicesDistance(ArrayList<Point> services, Point newService) {
+		double distance = 0.0;
+		for(int i = 0; i < services.size(); i++) {
+			distance += services.get(i).getDistance(newService);
+		}
+		distance /= services.size();
+		return distance;
 	}
 	//------------------------------------------------------------------------------------------//
 	//--------------------------------------TEST SECTION----------------------------------------//

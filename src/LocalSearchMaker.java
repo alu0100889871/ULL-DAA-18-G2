@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 
@@ -31,7 +34,7 @@ public class LocalSearchMaker extends Algorithm {
 	public ArrayList<Point> exhaustiveSingleLocationChangeSearch(ArrayList<Point> initialSolution){
 		boolean upgraded = true;
 		ArrayList<Point> actualSolution = new ArrayList<Point>(initialSolution);
-		while(upgraded) {
+		while(upgraded && initialSolution.size() > 1) {
 			upgraded = false;
 			ArrayList<Point> root = new ArrayList<Point>(actualSolution);
 			root.remove(actualSolution.get(actualSolution.size() - 1));
@@ -45,5 +48,44 @@ public class LocalSearchMaker extends Algorithm {
 			}
 		}
 		return actualSolution;
+	}
+	
+	public ArrayList<Point> randomKLocationChangeSearch(ArrayList<Point> initialSolution, int maxK){
+		//LIMITA LA RANDOMIZACION AL NUMERO DE ELEMENTOS DEL VECTOR
+		if(initialSolution.size() < maxK) {
+			maxK = initialSolution.size();
+		}
+		//CONSIGUE LAS POSICIONES ALEATORIAS
+		Set<Integer> positionsToRandomize = new HashSet<Integer>();
+		while(positionsToRandomize.size() < maxK) {
+			positionsToRandomize.add((int) (Math.random() * initialSolution.size()));
+		}
+		List<Integer> positions = new ArrayList<Integer>(positionsToRandomize);
+		
+		for (int i = 0; i < positions.size(); i++) {
+			ArrayList<Point> newSolution = new ArrayList<Point>(initialSolution);
+			Point p = newSolution.get(positions.get(i));
+			
+			newSolution.remove((int) positions.get(i));
+			ArrayList<ArrayList<Point>> kCombinations = getKCombinations(newSolution);
+			newSolution.add(p);
+			kCombinations.remove(newSolution);
+			
+			for (int j = 0; j < kCombinations.size(); j++) {
+				if (getPcp().funcionObjectivo(kCombinations.get(j)) < getPcp().funcionObjectivo(initialSolution)) {
+					initialSolution = getFixedSolution(kCombinations.get(j), newSolution, positions.get(i));
+					j = kCombinations.size();
+				}
+			}
+		}
+		return initialSolution;
+	}
+	
+	public ArrayList<Point> getFixedSolution(ArrayList<Point> completeSolution, ArrayList<Point> partialSolution, int index){
+		ArrayList<Point> newP = new ArrayList<Point>(completeSolution); 
+		newP.removeAll(partialSolution);
+		ArrayList<Point> fixedSolution = new ArrayList<Point>(partialSolution);
+		fixedSolution.add(index, newP.get(0));
+		return fixedSolution;
 	}
 }

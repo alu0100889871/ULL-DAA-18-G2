@@ -54,6 +54,36 @@ public class Algorithm {
 		getKCombinations(combis);
 		return sortCombinations();
 	}
+	
+	protected ArrayList<ArrayList<Point>> makeOrderedCombinations(int k){
+		getCombinations(k);
+		return sortCombinations();
+	}
+	
+	protected ArrayList<ArrayList<Point>> getCombinations(int k) {
+		ArrayList<ArrayList<Point>> combinations = new ArrayList<ArrayList<Point>>();
+		for(int i = 0; i < getPcp().getSolution().getDots().size(); i++) {
+			ArrayList<Point> newP = new ArrayList<Point>();
+			newP.add(getPcp().getValues().getDots().get(i));
+			combinations.add(newP);
+		}
+		while(combinations.get(0).size() < k) {
+			ArrayList<ArrayList<Point>> newCombs = new ArrayList<ArrayList<Point>>();
+			for(int i = 0; i < combinations.size(); i++) {
+				for (int j = 0; j < getPcp().getSolution().getDots().size(); j++) {
+					if(!combinations.get(i).contains(getPcp().getSolution().getDots().get(j))) {
+						ArrayList<Point> newComb = new ArrayList<Point>(combinations.get(i));
+						newComb.add(getPcp().getSolution().getDots().get(j));
+						newCombs.add(newComb);
+					}
+				}
+			}
+			combinations = new ArrayList<ArrayList<Point>>(newCombs);
+		}
+		
+		this.setCombinations(combinations);
+		return combinations;
+	}
 	/**
 	 * Método para la ordenación del array de combinaciones interno
 	 * @return array de combinaciones interno
