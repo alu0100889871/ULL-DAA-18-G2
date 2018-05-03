@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Solution {
 	private ArrayList<Point> dots;
-	private int k;
+	private int k; //numeros de servicios.
 	private double bestFObj;
 	
 	/**
