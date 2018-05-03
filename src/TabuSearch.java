@@ -20,6 +20,7 @@ public class TabuSearch extends Algorithm {
 	 *
 	 */
 	
+	private static final int DELAY = 4; //el tiempo que permanecen en tabú el contenido.
 	private	ArrayList<ArrayList<Integer>> tabuList_ = new ArrayList<ArrayList<Integer>>(); //lista para marcar los programas tabu
 	private int k_ = 0; //tamanyo de los numeros de servicios.
 	
@@ -44,6 +45,31 @@ public class TabuSearch extends Algorithm {
 	
 	
 	
+	
+	
+	public void busqueda(ArrayList<Point> initialSolution)
+	{
+		/* 
+		 * 
+		 * hasta que (100) iteraciones ??:
+		 * 
+		 * 1. solucion inicial
+		 * 2. lista de candidatos (a lo sumo 10 candidatos por iteración escogidos aleatoriamente)
+		 * 3. iteracion con los nodos de la solucion inicial con los candidatos para hallar el mejor coste
+		 * 4. poner en tabu la modificación && amuentar en la memoria a largo plazo a uno.
+		 * 5. decrementar tabla tabu en uno en cada iteracion.
+		 * 6. 
+		 * 
+		 */
+		
+		int w = 0;
+		
+		while(w < 100) // criterio de parada ?? aver esto con punto . funciona ??
+		{
+			
+		}
+	}
+	
 	/**
 	 * Método para obtener a la frecuencia ( memoria a largo plazo) de tabuList
 	 * @param i
@@ -66,7 +92,11 @@ public class TabuSearch extends Algorithm {
 	}
 	
 	
-	
+	/** 
+	 * metodo para obtener las frecuencia de las modificaciones
+	 * @param i
+	 * @param j
+	 */
 	public void  setFrequency(int i,int j)
 	{
 		
@@ -81,7 +111,12 @@ public class TabuSearch extends Algorithm {
 		}
 	}
 	
-	
+	/**
+	 * método para obtener el valor de los valores tabú
+	 * @param i
+	 * @param j
+	 * @return
+	 */
 	public Integer getTabu(int i, int j)
 	{
 		if(i > j)
@@ -93,7 +128,11 @@ public class TabuSearch extends Algorithm {
 		}
 	}
 	
-	
+	/**
+	 * método por el cual añado a la lista tabu la modificacion.
+	 * @param i
+	 * @param j
+	 */
 	public void  setTabu(int i,int j)
 	{
 		
@@ -101,14 +140,16 @@ public class TabuSearch extends Algorithm {
 		
 		if(i > j)
 		{
-			tabuList_.get(j).set(i, tabuList_.get(j).get(i) + 3);
+			tabuList_.get(j).set(i, tabuList_.get(j).get(i) + DELAY);
 		}else
 		{
-			tabuList_.get(i).set(j, tabuList_.get(i).get(j) + 3);
+			tabuList_.get(i).set(j, tabuList_.get(i).get(j) + DELAY);
 		}
 	}
 	
-	
+	/**
+	 * proceso para decrementar las listas tabu en uno, lo usaremos en cada iteracion de la búsqueda
+	 */
 	public void decrementarTabu()
 	{
 		for(int i = 0 ; i < k_ ; i++)
