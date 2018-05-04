@@ -43,7 +43,8 @@ public class LNSAlgorithm extends Algorithm{
 		solution.removeAll(aux);
 		return solution;
 	}	
-	/**
+	
+	/*
 	 * Metodo para resolver por LNS
 	 * 1. Creamos la solucion usando GRASP
 	 * 2. Destruimos
