@@ -46,7 +46,7 @@ public class LocalSearchMaker extends Algorithm {
 					actualSolution = new ArrayList<Point>(combinations.get(j));
 				}
 			}
-		}
+		} 
 		return actualSolution;
 	}
 	

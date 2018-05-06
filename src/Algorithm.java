@@ -35,7 +35,7 @@ public class Algorithm {
 	protected ArrayList<ArrayList<Point>> getCombinations() {
 		return combinations;
 	}
-	private void setCombinations(ArrayList<ArrayList<Point>> combinations) {
+	protected void setCombinations(ArrayList<ArrayList<Point>> combinations) {
 		this.combinations = combinations;
 	}
 
@@ -129,6 +129,10 @@ public class Algorithm {
 		this.setCombinations(combinations);
 		return combinations;
 	}
+	
+	
+	
+	
 	/**
 	 * Método aplicado para la ordenación recursiva de los elementos del array de combinaciones
 	 * @param low índice menor de la zona del array a considerar para la ordenación
