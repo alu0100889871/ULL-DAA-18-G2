@@ -87,6 +87,25 @@ public class Matrix {
 		}
 		return getDistances().get(x).get(y);
 	}
+	
+	
+	/**
+	 * funcion que devuelve el indice del punto 
+	 * @param value
+	 * @return
+	 */
+	public Integer getIndex(Point value)
+	{
+		for( int i = 0; i < dots.size(); i++)
+		{
+			if(dots.get(i) == value)
+			{
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 
 	/**
 	 * Getter of the submatrix formed by the possible locations in order

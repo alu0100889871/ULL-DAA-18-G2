@@ -58,11 +58,10 @@ public class TabuSearch extends Algorithm {
 		 * hasta que (100) iteraciones ??:
 		 * 
 		 * 1. solucion inicial
-		 * 2. lista de candidatos (a lo sumo 10 candidatos por iteración escogidos aleatoriamente)
-		 * 3. iteracion con los nodos de la solucion inicial con los candidatos para hallar el mejor coste
-		 * 4. poner en tabu la modificación && amuentar en la memoria a largo plazo a uno.
-		 * 5. decrementar tabla tabu en uno en cada iteracion.
-		 * 6. 
+		 * 2. Busqueda local ( BL1 modificada con las listas tabu para tener menos que iterar ?? )
+		 * 3. poner en tabu la modificación && amuentar en la memoria a largo plazo a uno.
+		 * 4. decrementar tabla tabu en uno en cada iteracion.
+		 *  
 		 * 
 		 */
 		
@@ -127,7 +126,7 @@ public class TabuSearch extends Algorithm {
 		}
 		ArrayList<ArrayList<Point>> combinations = new ArrayList<ArrayList<Point>>();
 		for (int j = 0; j < getPcp().getSolution().getDots().size(); j++) {
-			if((!combis.contains(getPcp().getSolution().getDots().get(j))) && !(checkServer(getPcp().getSolution().getDots().get(j))) ) {
+			if((!combis.contains(getPcp().getSolution().getDots().get(j))) && !(checkServer(getPcp().getValues().getIndex(getPcp().getSolution().getDots().get(j)))) ) {
 				ArrayList<Point> newComb = new ArrayList<Point>(combis);
 				newComb.add(getPcp().getSolution().getDots().get(j));
 				combinations.add(newComb);
