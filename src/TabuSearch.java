@@ -67,9 +67,18 @@ public class TabuSearch extends Algorithm {
 		
 		int w = 0;
 		
+		double coste= getPcp().funcionObjectivo(initialSolution); //coste con el que comprobaremos el criterio de aspiracion
+		
 		while(w < FIN) // criterio de parada ?? aver esto con punto . funciona ??
 		{
 			
+			
+			exhaustiveSingleLocationChangeSearch(initialSolution); //busqueda greedy con las condiciones de tabu.
+			
+			
+			
+			
+			w++;
 		}
 	}
 	
@@ -102,18 +111,75 @@ public class TabuSearch extends Algorithm {
 	
 
 	
+	/**
+	 * busqueda local de un elemento modificada para el tabu search
+	 * @param initialSolution
+	 * @return
+	 */
+	
+	public ArrayList<Point> exhaustiveSingleLocationChangeSearch(ArrayList<Point> initialSolution){
+		boolean upgraded = true;
+		double coste = getPcp().funcionObjectivo(initialSolution);
+		
+		ArrayList<Point> actualSolution = new ArrayList<Point>(initialSolution);
+		while(upgraded && initialSolution.size() > 1) {
+			upgraded = false;
+			ArrayList<Point> root = new ArrayList<Point>(actualSolution);
+			root.remove(actualSolution.get(actualSolution.size() - 1));
+			ArrayList<ArrayList<Point>> combinations = getKCombinations(root, coste);
+			combinations.remove(actualSolution);
+			for(int j = 0; j < combinations.size(); j++) {
+				if(getPcp().funcionObjectivo(combinations.get(j)) < getPcp().funcionObjectivo(actualSolution)) {
+					upgraded = true;
+					actualSolution = new ArrayList<Point>(combinations.get(j));
+				}
+			}
+		}
+		
+		int p  = diferencia(initialSolution, actualSolution); //indice del nodo que añadiremos a tabu. //funcion diferencia
+		addTabu(p);
+		return actualSolution;
+	}
 	
 	
+	/**
+	 * metodo para buscar el elemento diferente entre dos arrays.
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	
+	public Integer diferencia(ArrayList<Point> a, ArrayList<Point> b)
+	{
+		if(a.size() == b.size())
+		{
+			
+	
+		Integer resultado= 0;
+		
+		ArrayList<Point> aux = a;
+		aux.removeAll(b);
+		
+		resultado = getPcp().getValues().getIndex(aux.get(0));
+		
+		return resultado;
+		}else {
+			
+			System.err.println("errr"); //error en los tamanyos de los arraylist (no deberia de pasar)
+			return -1;
+		}
+		
+	}
 	/**
 	 * Método para la generación de un array de combinaciones de tamaño n + 1, siendo n
 	 * el tamaño del que se compone el array de entrada. En este mismo array se basa la
 	 * búsqueda de combinaciones, dando todas las combinaciones entre el array de entrada
 	 * y cada uno de los elementos que están fuera del mismo.
 	 * @param combis combinación de elementos inicial
+	 * @paam coste para comprobar si mejora la solu
 	 * @return ArrayList<ArrayList<Point>> array de combinaciones
 	 */
-	public ArrayList<ArrayList<Point>> getKCombinations(ArrayList<Point> combis) {
+	public ArrayList<ArrayList<Point>> getKCombinations(ArrayList<Point> combis , double coste) {
 		ArrayList<ArrayList<Point>> aux = new ArrayList<ArrayList<Point>>();
 		if(combis.size() < 1) {
 			 for(int i = 0; i < getPcp().getSolution().getDots().size(); i++) {
@@ -126,7 +192,7 @@ public class TabuSearch extends Algorithm {
 		}
 		ArrayList<ArrayList<Point>> combinations = new ArrayList<ArrayList<Point>>();
 		for (int j = 0; j < getPcp().getSolution().getDots().size(); j++) {
-			if((!combis.contains(getPcp().getSolution().getDots().get(j))) && !(checkServer(getPcp().getValues().getIndex(getPcp().getSolution().getDots().get(j)))) ) {
+			if((!combis.contains(getPcp().getSolution().getDots().get(j))) && !(checkServer(getPcp().getValues().getIndex(getPcp().getSolution().getDots().get(j)), coste)) ) {
 				ArrayList<Point> newComb = new ArrayList<Point>(combis);
 				newComb.add(getPcp().getSolution().getDots().get(j));
 				combinations.add(newComb);
@@ -144,10 +210,10 @@ public class TabuSearch extends Algorithm {
 	 * @param servidor
 	 * @param cliente
 	 */
-	public void addTabu(int servidor, int cliente)
+	public void addTabu(int servidor)
 	{
 		setServer(servidor, DELAY);
-		setClient(cliente,DELAY);
+		//setClient(cliente,DELAY);
 	}
 	
 	
@@ -155,9 +221,10 @@ public class TabuSearch extends Algorithm {
 	/**
 	 * checkea que el nodo i no esté tabú
 	 * @param i
+	 * @param coste compobamos el criterio de aspiracion
 	 * @return
 	 */
-	public boolean checkServer(int i)
+	public boolean checkServer(int i, double coste)
 	{
 		if(getServer(i) > 0)
 		{
