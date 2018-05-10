@@ -1,5 +1,16 @@
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author Sebastián José Díaz Rodríguez
+ * @author Ernesto Echeverría González
+ * @author Norberto García Gaspar
+ * @author Victoria Quintana Martí
+ * 
+ * @version 1.0.0
+ * @since 17/04/2018
+ * 
+ * Clase para la resolución de problemas de p-centro mediante Greedy Randomized Adaptative Search Procedure (GRASP)
+ */
 public class BasicVNSAlgorithm extends Algorithm{
 	
 	public BasicVNSAlgorithm(PCenterProblem pcp) {
@@ -49,8 +60,12 @@ public class BasicVNSAlgorithm extends Algorithm{
 		do {
 			int k = 1;
 			do {
+				System.out.println("ActualSolution " + actualSolution.toString());
 				ArrayList<Point> shakedSolution = new ArrayList<Point>(shake(actualSolution, k));
+				System.out.println("shakedSolution " + shakedSolution.toString());
 				ArrayList<Point> improvedSolution = new LocalSearchMaker(getPcp()).exhaustiveSingleLocationChangeSearch(shakedSolution);
+				
+				System.out.println("ImrpoveSolution " + improvedSolution.toString());
 				if(getPcp().funcionObjectivo(improvedSolution) < getPcp().funcionObjectivo(actualSolution)) {
 						actualSolution = new ArrayList<Point>(improvedSolution);
 						k = 1;
@@ -67,7 +82,7 @@ public class BasicVNSAlgorithm extends Algorithm{
 	//--------------------------------------TEST SECTION----------------------------------------//
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
-		PCenterProblem pcp = new PCenterProblem(args[0]);
+		PCenterProblem pcp = new PCenterProblem("C:\\Users\\norberto\\git\\ULL-DAA-18-G2\\test\\prueba.txt");
 		BasicVNSAlgorithm bvnsa = new BasicVNSAlgorithm(pcp);
 		
 		ArrayList<Point> solution = bvnsa.resolve();

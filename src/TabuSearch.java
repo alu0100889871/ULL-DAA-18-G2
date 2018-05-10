@@ -1,9 +1,17 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
- * Clase donde se realizará la busqueda tabú
- * @author norberto
- *
+ * 
+ * @author Sebastián José Díaz Rodríguez
+ * @author Ernesto Echeverría González
+ * @author Norberto García Gaspar
+ * @author Victoria Quintana Martí
+ * 
+ * @version 1.0.0
+ * @since 17/04/2018
+ * 
+ * Clase para la resolución de problemas de p-centro mediante Greedy Randomized Adaptative Search Procedure (GRASP)
  */
 public class TabuSearch extends Algorithm {
 
@@ -25,9 +33,10 @@ public class TabuSearch extends Algorithm {
 	 */
 	
 
-	private ArrayList<Integer> tabuServer_= new ArrayList<Integer>(); //lista tabu los servicions
-	private ArrayList<Integer> tabuClient_= new ArrayList<Integer>();//lista tabú para los clientes.
-	private ArrayList<Integer> frecuencia_= new ArrayList<Integer>(); //frecuencia.
+	private ArrayList<TabuList> tabuServer_= new ArrayList<TabuList>(); //lista tabu los servicions
+	private ArrayList<TabuList> tabuClient_= new ArrayList<TabuList>();//lista tabú para los clientes.
+	private ArrayList<TabuList> frecuencia_= new ArrayList<TabuList>(); //frecuencia.
+	private int k_ = 0; //los k elementos de la solucion
 	private int size_ = 0; //tamanyo de los array
 	
 	
@@ -38,12 +47,7 @@ public class TabuSearch extends Algorithm {
 		size_ = pcp.getValues().getDots().size(); // esto es el tamaño de los nodos totales ?
 		
 		
-		for(int i = 0; i < size_; i++) //inicializamos todas las tablas con el tamañyo de los nodos
-		{
-			tabuServer_.add(0);
-			tabuClient_.add(0);
-			frecuencia_.add(0);
-		}
+
 		
 	}
 	
@@ -51,7 +55,7 @@ public class TabuSearch extends Algorithm {
 	
 	
 	
-	public void busqueda(ArrayList<Point> initialSolution)
+	public ArrayList<Point> busqueda(ArrayList<Point> initialSolution)
 	{
 		/* 
 		 * 
@@ -66,27 +70,135 @@ public class TabuSearch extends Algorithm {
 		 */
 		
 		int w = 0;
-		
-		double coste= getPcp().funcionObjectivo(initialSolution); //coste con el que comprobaremos el criterio de aspiracion
+		ArrayList<Point> resultado = randomSolution(getPcp().getSolution().getK());
+
+		System.out.println("resultado  " + resultado.toString());
+		System.out.println("tama " + resultado.size());
+
+		getPcp().getSolution().setBestFObj(getPcp().funcionObjectivo(resultado));
+    	getPcp().getSolution().setDots(resultado);
+		//coste con el que comprobaremos el criterio de aspiracion
 		
 		while(w < FIN) // criterio de parada ?? aver esto con punto . funciona ??
 		{
 			
 			
-			exhaustiveSingleLocationChangeSearch(initialSolution); //busqueda greedy con las condiciones de tabu.
+			//busqueda greedy con las condiciones de tabu.
 			
 			
 			
 			
 			w++;
 		}
+		
+
+		return resultado;
 	}
 	
 
 	
+	/**
+	 * funcion que devuelve una solucion aleatoria de tamanyo k
+	 * @param k
+	 * @return
+	 */
+	
+	public ArrayList<Point> randomSolution(int k)
+	{
+		Random r1 = new Random(700);
+		ArrayList<Point> aux = new ArrayList<Point>();
+		aux.addAll(getPcp().getValues().getDots());
+		ArrayList<Point> tmp  = new ArrayList<Point>();
+		
+		while(tmp.size() < k)
+		{
+			int val = r1.nextInt(aux.size());
+			
+			tmp.add(aux.get(val));
+			
+			aux.remove(val);
+		}
+			
+		System.out.println("matriz dentro " + getPcp().getValues().getDots());
+			
+			return tmp;
+	}
 	
 	
 	
+	/**
+	 * metodo de busqueda local greedy con los añadidos del tabu
+	 * @param initialSolution
+	 * @return
+	 */
+	
+	
+	
+	public ArrayList<Point> LocalSearchTabu(ArrayList<Point> initialSolution)
+	{
+		ArrayList<Point> client = getPcp().getSolution().getDots();
+		client.removeAll(initialSolution); //dejamos los clientes para compararlos.
+		
+		
+		
+		
+		ArrayList<Point> actualSolution = initialSolution; //inicializo la solucion actual con la funcion la que entra
+		
+		
+		
+		for(int i = 0; i < actualSolution.size(); i++ )
+		{
+			ArrayList<Point> improvedSolution = actualSolution;
+			
+			for(int j = 0; j < client.size(); j++)
+			{
+				if(checkServer(client.get(j))) //comprobamos si el nodo que queremos añadir existe en tabu
+				{
+				improvedSolution.remove(i);
+				improvedSolution.add(client.get(j));
+				
+				if(getPcp().funcionObjectivo(improvedSolution) < getPcp().funcionObjectivo(actualSolution)) //checkamos
+				{
+					actualSolution = improvedSolution; //cambiamos el valor de la solucion por la solucion objetivo
+				}
+				
+				}
+			}//end for
+		}//end for
+		
+		
+		addTabu(actualSolution, initialSolution);
+		
+		
+		return actualSolution;
+	}
+	
+	
+	/**
+	 * metodo para checkar y meter el nodo saliente en la lista tabu
+	 * @param actualSolution
+	 * @param initialSolution
+	 */
+	private void addTabu(ArrayList<Point> actualSolution, ArrayList<Point> initialSolution) {
+		
+		ArrayList<Point> aux = initialSolution;
+		
+		aux.removeAll(actualSolution);
+		
+		if(aux.size() == 1)
+		{
+			addTabu(aux.get(0)); //añadimos el nodo diferente de la solucion inicial
+		}else
+		{
+			System.err.println("err-> " + aux.toString());
+		}
+		
+	}
+
+
+
+
+
 	/**
 	 * funcion que decrementa las listas tabu a 0 ( memoria a corto plazo)
 	 * 
@@ -94,114 +206,36 @@ public class TabuSearch extends Algorithm {
 	
 	public void decrementar()
 	{
-		for(int i = 0; i < size_; i++)
+		ArrayList<TabuList> aux = new ArrayList<TabuList>();
+		for(int i = 0; i < getServer().size(); i++)
 		{
-			if(getServer(i) > 0)
+			getServer().get(i).decrementar();
+			if(getServer().get(i).getCont() == 0)
 			{
-				setServer(i, getServer(i) - 1);
-			}
-			
-			if(getClient(i) > 0)
-			{
-				setClient(i, getClient(i) -1);
+				aux.add(getServer().get(i));
 			}
 		}
+		
+		getServer().removeAll(aux);
+		
+		/*
+		 * lo mismo para el cliente
+		 */
+	
 	}
+	
 	
 	
 
 	
-	/**
-	 * busqueda local de un elemento modificada para el tabu search
-	 * @param initialSolution
-	 * @return
-	 */
 	
-	public ArrayList<Point> exhaustiveSingleLocationChangeSearch(ArrayList<Point> initialSolution){
-		boolean upgraded = true;
-		double coste = getPcp().funcionObjectivo(initialSolution);
-		
-		ArrayList<Point> actualSolution = new ArrayList<Point>(initialSolution);
-		while(upgraded && initialSolution.size() > 1) {
-			upgraded = false;
-			ArrayList<Point> root = new ArrayList<Point>(actualSolution);
-			root.remove(actualSolution.get(actualSolution.size() - 1));
-			ArrayList<ArrayList<Point>> combinations = getKCombinations(root, coste);
-			combinations.remove(actualSolution);
-			for(int j = 0; j < combinations.size(); j++) {
-				if(getPcp().funcionObjectivo(combinations.get(j)) < getPcp().funcionObjectivo(actualSolution)) {
-					upgraded = true;
-					actualSolution = new ArrayList<Point>(combinations.get(j));
-				}
-			}
-		}
-		
-		int p  = diferencia(initialSolution, actualSolution); //indice del nodo que añadiremos a tabu. //funcion diferencia
-		addTabu(p);
-		return actualSolution;
-	}
+
+	
+
 	
 	
-	/**
-	 * metodo para buscar el elemento diferente entre dos arrays.
-	 * @param a
-	 * @param b
-	 * @return
-	 */
-	
-	public Integer diferencia(ArrayList<Point> a, ArrayList<Point> b)
-	{
-		if(a.size() == b.size())
-		{
-			
-	
-		Integer resultado= 0;
-		
-		ArrayList<Point> aux = a;
-		aux.removeAll(b);
-		
-		resultado = getPcp().getValues().getIndex(aux.get(0));
-		
-		return resultado;
-		}else {
-			
-			System.err.println("errr"); //error en los tamanyos de los arraylist (no deberia de pasar)
-			return -1;
-		}
-		
-	}
-	/**
-	 * Método para la generación de un array de combinaciones de tamaño n + 1, siendo n
-	 * el tamaño del que se compone el array de entrada. En este mismo array se basa la
-	 * búsqueda de combinaciones, dando todas las combinaciones entre el array de entrada
-	 * y cada uno de los elementos que están fuera del mismo.
-	 * @param combis combinación de elementos inicial
-	 * @paam coste para comprobar si mejora la solu
-	 * @return ArrayList<ArrayList<Point>> array de combinaciones
-	 */
-	public ArrayList<ArrayList<Point>> getKCombinations(ArrayList<Point> combis , double coste) {
-		ArrayList<ArrayList<Point>> aux = new ArrayList<ArrayList<Point>>();
-		if(combis.size() < 1) {
-			 for(int i = 0; i < getPcp().getSolution().getDots().size(); i++) {
-				 ArrayList<Point> tmp = new ArrayList<Point>();
-				 tmp.add(getPcp().getSolution().getDots().get(i));
-				 aux.add(tmp);
-			 }
-			 this.setCombinations(aux);
-			 return aux;
-		}
-		ArrayList<ArrayList<Point>> combinations = new ArrayList<ArrayList<Point>>();
-		for (int j = 0; j < getPcp().getSolution().getDots().size(); j++) {
-			if((!combis.contains(getPcp().getSolution().getDots().get(j))) && !(checkServer(getPcp().getValues().getIndex(getPcp().getSolution().getDots().get(j)), coste)) ) {
-				ArrayList<Point> newComb = new ArrayList<Point>(combis);
-				newComb.add(getPcp().getSolution().getDots().get(j));
-				combinations.add(newComb);
-			}
-		}
-		this.setCombinations(combinations);
-		return combinations;
-	}
-	
+
+
 	
 	
 	
@@ -210,10 +244,10 @@ public class TabuSearch extends Algorithm {
 	 * @param servidor
 	 * @param cliente
 	 */
-	public void addTabu(int servidor)
+	public void addTabu(Point servidor)
 	{
-		setServer(servidor, DELAY);
-		//setClient(cliente,DELAY);
+		setServer(servidor);
+	   //setClient(cliente);
 	}
 	
 	
@@ -224,14 +258,15 @@ public class TabuSearch extends Algorithm {
 	 * @param coste compobamos el criterio de aspiracion
 	 * @return
 	 */
-	public boolean checkServer(int i, double coste)
+	public boolean checkServer(Point tabu)
 	{
-		if(getServer(i) > 0)
+		if(getServer().contains(tabu))
 		{
 			return true;
+		}else {
+			return false;
 		}
 		
-		return false;
 	}
 	
 	
@@ -240,27 +275,18 @@ public class TabuSearch extends Algorithm {
 	 * @param i
 	 * @return
 	 */
-	public boolean checkClient(int i)
+	public boolean checkClient(Point tabu)
 	{
-		if(getClient(i) > 0)
+		if(getClient().contains(tabu))
 		{
 			return true;
+		}else {
+			return false;
 		}
-		
-		return false;
 	}
 	
 	
-	/**
-	 * incrementa en 1 el nodo seleccionado ( memoria a largo plazo)
-	 * @param i
-	 */
-	
-	
-	public void Incrementa(int i)
-	{
-		setFrecuencia(i, getFrecuencia(i) +1);
-	}
+
 	
 	/*
 	 * 
@@ -274,31 +300,35 @@ public class TabuSearch extends Algorithm {
 	 * @param i
 	 * @return
 	 */
-	public Integer getServer(int i)
+	public ArrayList<TabuList> getServer()
 	{
-		return tabuServer_.get(i);
+		return tabuServer_;
 	}
 	
+	
+	
+
 	/**
 	 * funcion que modifica el nodo servidor tabú
 	 * @param i
 	 * @param val
 	 */
-	public void setServer(int i, int val)
+	public void setServer( Point val)
 	{
-		tabuServer_.set(i, val);
+			TabuList aux = new TabuList(val,DELAY);
+			tabuServer_.add(aux);
 	}
 	
 	
 	/**
 	 * funcion que devuelve el nodo cliente tabú
-	 * @param i
+	 * @param iS
 	 * @return
 	 */
 	
-	public Integer getClient(int i)
+	public ArrayList<TabuList> getClient()
 	{
-		return tabuClient_.get(i);
+		return tabuClient_;
 	}
 	
 	/**
@@ -306,9 +336,10 @@ public class TabuSearch extends Algorithm {
 	 * @param i
 	 * @param val
 	 */
-	public void setClient(int i, int val)
+	public void setClient(int i, Point val)
 	{
-		tabuClient_.set(i, val);
+		TabuList aux = new TabuList(val,DELAY);
+		tabuClient_.add(aux);
 	}
 	
 	/**
@@ -316,9 +347,9 @@ public class TabuSearch extends Algorithm {
 	 * @param i
 	 * @return
 	 */
-	public Integer getFrecuencia(int i)
+	public ArrayList<TabuList> getFrecuencia()
 	{
-		return frecuencia_.get(i);
+		return frecuencia_;
 	}
 	
 	/**
@@ -326,9 +357,32 @@ public class TabuSearch extends Algorithm {
 	 * @param i
 	 * @param val
 	 */
-	public void setFrecuencia(int i, int val)
+	public void setFrecuencia( Point val)
 	{
-		frecuencia_.set(i, val);
+		TabuList aux = new TabuList(val,0);
+		tabuClient_.add(aux);
+	}
+	
+	
+	
+	//------------------------------------------------------------------------------------------//
+	//--------------------------------------TEST SECTION----------------------------------------//
+	//------------------------------------------------------------------------------------------//
+	public static void main(String args[]) {
+		PCenterProblem pcp = new PCenterProblem("C:\\Users\\norberto\\git\\ULL-DAA-18-G2\\test\\prueba.txt");
+		TabuSearch lns = new TabuSearch(pcp);
+		
+		System.out.println("puntos matrix " + pcp.getValues().getDots().toString());
+		System.out.println("puntos solution " + pcp.getSolution().getDots().toString());
+		ArrayList<Point> solution = lns.busqueda(pcp.getSolution().getDots());
+		System.out.println("SOLUTION POINTS = " + solution);
+		System.out.println("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution));
+		
+		ArrayList<Integer> locations = new ArrayList<Integer>();
+		for(int i = 0; i < lns.getPcp().getSolution().getDots().size(); i++) {
+			locations.add(lns.getPcp().getValues().getDots().indexOf(solution.get(i)));
+		}
+		System.out.println("INDEXES = " + locations);
 	}
 	
 
