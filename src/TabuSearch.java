@@ -141,8 +141,8 @@ public class TabuSearch extends Algorithm {
 		client.addAll( getPcp().getValues().getDots());
 
 		client.removeAll(initialSolution); //dejamos los clientes para compararlos.
-		System.out.println("initialSolved-> " + initialSolution.toString());
-		System.out.println("Tabu server-> " + getServer().toString());
+		//System.out.println("initialSolved-> " + initialSolution.toString());
+		//System.out.println("Tabu server-> " + getServer().toString());
 		//System.out.println("client " + client.toString());
 		
 		
@@ -169,7 +169,7 @@ public class TabuSearch extends Algorithm {
 				{
 	
 				actualSolution.remove(i);
-				actualSolution.add(client.get(j));
+				actualSolution.add(i, client.get(j));
 				
 				//System.out.println("improved-> " + improvedSolution.toString());
 				
@@ -183,19 +183,27 @@ public class TabuSearch extends Algorithm {
 				
 				}
 				
-				}else
-				{
-					System.out.println("ni entra hulio");//end for
 				}
+
 			}
 		}//end for
 		
+		
+		//System.out.println("#Solucion inicial-> " + initialSolution.toString());
+		//System.out.println("#solucion improvisada-> " + actualSolution.toString());
 		decrementar();
 
-		addTabu(improvedSolution, initialSolution);
-
+		if(actualSolution.toString().equals(initialSolution.toString()))
+		{
+			System.out.println("no mejora ");
+			return initialSolution;
+		}else
+		{
+			addTabu(improvedSolution,initialSolution);
+			return improvedSolution;
+		}
 		
-		return improvedSolution;
+	
 	}
 	
 	
@@ -292,7 +300,17 @@ public class TabuSearch extends Algorithm {
 	public boolean checkServer(Point tabu)
 	{
 		
-		for(int i= 0; )
+		for(int i= 0; i < getServer().size(); i++)
+		{
+			//System.out.println("tabu point-> " + getServer().get(i).toString());
+			//System.out.println("punto compro-> " + tabu.toString());
+			if((getServer().get(i).getPoint().getX() == tabu.getX()) && (getServer().get(i).getPoint().getY() == tabu.getY()) )
+			{
+				return true;
+			}
+		}
+		
+		return false;
 		
 		/*if(getServer().contains(tabu))
 		{
@@ -403,7 +421,7 @@ public class TabuSearch extends Algorithm {
 	//--------------------------------------TEST SECTION----------------------------------------//
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
-		PCenterProblem pcp = new PCenterProblem("C:\\Users\\norberto\\git\\ULL-DAA-18-G2\\test\\prueba.txt");
+		PCenterProblem pcp = new PCenterProblem("C:\\Users\\norberto\\git\\ULL-DAA-18-G2\\test\\prueba3.txt");
 		TabuSearch lns = new TabuSearch(pcp);
 		
 		//System.out.println("puntos matrix " + pcp.getValues().getDots().toString());
