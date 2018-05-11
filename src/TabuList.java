@@ -61,4 +61,10 @@ public class TabuList {
 	{
 		return contador_;
 	}
+	
+	
+	public String toString()
+	{
+		return tabu_.toString() + " count: " + contador_;
+	}
 }

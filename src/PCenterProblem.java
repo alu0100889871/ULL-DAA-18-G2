@@ -98,8 +98,8 @@ public class PCenterProblem {
 			double min = Double.MAX_VALUE;
 			for(int j = 0; j < servicesDots.size(); j++) {
 				int index = getValues().getDots().indexOf(servicesDots.get(j));
-				System.out.println("Point-> " + servicesDots.get(j));
-				System.out.println("i-> " + index);
+				//System.out.println("Point-> " + servicesDots.get(j));
+				//System.out.println("i-> " + index);
 				if(min > getValues().getDistance(index, i)){
 					min = getValues().getDistance(index, i);
 				}
