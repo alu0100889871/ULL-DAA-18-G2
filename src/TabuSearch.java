@@ -47,6 +47,17 @@ public class TabuSearch extends Algorithm {
 
 		size_ = pcp.getValues().getDots().size(); // esto es el tamaño de los nodos totales ?
 		
+		for(int i = 0; i < size_; i++) //generamos la tabla a largo plazo 
+		{
+			 
+			Point aux = pcp.getValues().getDots().get(i);
+			setFrecuencia(aux);
+		}
+		
+		//System.out.println("tama " + size_);
+		
+		//System.out.println("YOLO " + frecuencia_.toString());
+		
 		
 
 		
@@ -145,6 +156,7 @@ public class TabuSearch extends Algorithm {
 		System.out.println("#################################");
 		System.out.println("initialSolved-> " + initialSolution.toString());
 		System.out.println("Tabu server-> " + getServer().toString());
+		System.out.println("tabla frecuencia-> " + getFrecuencia().toString());
 		System.out.println("#################################");
 		//System.out.println("client " + client.toString());
 		
@@ -289,11 +301,28 @@ public class TabuSearch extends Algorithm {
 	public void addTabu(Point servidor)
 	{
 		setServer(servidor);
+		aumFrecuencia(servidor);
 	   //setClient(cliente);
 	}
 	
 	
-	
+	/**
+	 * metodo para aumentar frecuencia en uno
+	 * @param servidor
+	 */
+	private void aumFrecuencia(Point servidor) {
+		
+		int index = getPcp().getValues().getDots().indexOf(servidor);
+		
+		getFrecuencia().get(index).incrementar();
+		
+		
+	}
+
+
+
+
+
 	/**
 	 * checkea que el nodo i no esté tabú , a no ser que mejore el optimo global
 	 * @param i
@@ -321,7 +350,7 @@ public class TabuSearch extends Algorithm {
 				aux.add(index, tabu);
 				
 				
-				if( c_ < getPcp().funcionObjectivo(aux))
+				if( c_ <= getPcp().funcionObjectivo(aux))
 				{
 					return true;
 				}else
@@ -465,7 +494,7 @@ public class TabuSearch extends Algorithm {
 	public void setFrecuencia( Point val)
 	{
 		TabuList aux = new TabuList(val,0);
-		tabuClient_.add(aux);
+		frecuencia_.add(aux);
 	}
 	
 	
