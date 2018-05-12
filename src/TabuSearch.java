@@ -16,7 +16,7 @@ import java.util.Random;
 public class TabuSearch extends Algorithm {
 
 	private static final int DELAY = 4; //el tiempo que permanecen en tabú el contenido.
-	private static final int FIN = 10; //constante que finaliza tabu
+	private static final int FIN = 1000; //constante que finaliza tabu
 	private static final int BEST = 500; //si lleva 500 iteraciones sin mejorar el coste global coge los nodos mas frecuentes (Intesificacion)
 	private static final int DIVER =200; //a los 200 no empezamos a penalizar los más frecuentes.
 	
@@ -38,6 +38,7 @@ public class TabuSearch extends Algorithm {
 	private ArrayList<TabuList> frecuencia_= new ArrayList<TabuList>(); //frecuencia.
 	private int k_ = 0; //los k elementos de la solucion
 	private int size_ = 0; //tamanyo de los array
+	public double c_ = Double.MAX_VALUE; // coste optimo global (usado para el criterio de aspiracion).
 	
 	
 	
@@ -141,8 +142,10 @@ public class TabuSearch extends Algorithm {
 		client.addAll( getPcp().getValues().getDots());
 
 		client.removeAll(initialSolution); //dejamos los clientes para compararlos.
-		//System.out.println("initialSolved-> " + initialSolution.toString());
-		//System.out.println("Tabu server-> " + getServer().toString());
+		System.out.println("#################################");
+		System.out.println("initialSolved-> " + initialSolution.toString());
+		System.out.println("Tabu server-> " + getServer().toString());
+		System.out.println("#################################");
 		//System.out.println("client " + client.toString());
 		
 		
@@ -165,7 +168,7 @@ public class TabuSearch extends Algorithm {
 			{
 				//System.out.println("ClientIndex " + client.get(j));
 
-				if(!checkServer(client.get(j))) //comprobamos si el nodo que queremos añadir existe en tabu
+				if(!checkServer(client.get(j), actualSolution, i)) //comprobamos si el nodo que queremos añadir existe en tabu
 				{
 	
 				actualSolution.remove(i);
@@ -292,21 +295,41 @@ public class TabuSearch extends Algorithm {
 	
 	
 	/**
-	 * checkea que el nodo i no esté tabú
+	 * checkea que el nodo i no esté tabú , a no ser que mejore el optimo global
 	 * @param i
 	 * @param coste compobamos el criterio de aspiracion
 	 * @return
 	 */
-	public boolean checkServer(Point tabu)
+	public boolean checkServer(Point tabu, ArrayList<Point> actualSolution, int index)
 	{
 		
 		for(int i= 0; i < getServer().size(); i++)
 		{
 			//System.out.println("tabu point-> " + getServer().get(i).toString());
 			//System.out.println("punto compro-> " + tabu.toString());
-			if((getServer().get(i).getPoint().getX() == tabu.getX()) && (getServer().get(i).getPoint().getY() == tabu.getY()) )
+			if((getServer().get(i).getPoint().getX() == tabu.getX()) && (getServer().get(i).getPoint().getY() == tabu.getY()))
 			{
-				return true;
+				
+				/*
+				 * si entra, tendremos que crear una solucion auxiliar para saber si mejora el coste optimo global
+				 * entonces, pese a estar en tabu lo añadimos
+				 * 
+				 */
+				ArrayList<Point> aux = new ArrayList<Point>(); 
+				aux.addAll(actualSolution);
+				aux.remove(index);
+				aux.add(index, tabu);
+				
+				
+				if( c_ < getPcp().funcionObjectivo(aux))
+				{
+					return true;
+				}else
+				{
+					c_ = getPcp().funcionObjectivo(aux); //criterio de aspiracion.
+					return false;
+				}
+				
 			}
 		}
 		
@@ -367,11 +390,41 @@ public class TabuSearch extends Algorithm {
 	 */
 	public void setServer( Point val)
 	{
-			TabuList aux = new TabuList(val,DELAY);
+		TabuList aux = new TabuList(val,DELAY);
+			if( !existServer(val))
+			{
+
 			tabuServer_.add(aux);
+			}else
+			{
+				for(int i = 0; i < getServer().size(); i++)
+				{
+					if((getServer().get(i).getPoint().getX() == val.getX()) && (getServer().get(i).getPoint().getY() == val.getY()))
+					{
+						
+						tabuServer_.set(i, aux);
+					}
+				}
+			}
 	}
 	
 	
+	private boolean existServer(Point val) {
+
+		for(int i = 0; i < getServer().size(); i++)
+		{
+			if((getServer().get(i).getPoint().getX() == val.getX()) && (getServer().get(i).getPoint().getY() == val.getY()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
+
+
 	/**
 	 * funcion que devuelve el nodo cliente tabú
 	 * @param iS
@@ -424,7 +477,7 @@ public class TabuSearch extends Algorithm {
 		PCenterProblem pcp = new PCenterProblem("C:\\Users\\norberto\\git\\ULL-DAA-18-G2\\test\\prueba3.txt");
 		TabuSearch lns = new TabuSearch(pcp);
 		
-		//System.out.println("puntos matrix " + pcp.getValues().getDots().toString());
+		System.out.println("puntos matrix " + pcp.getValues().getDots().toString());
 		//System.out.println("puntos solution " + pcp.getSolution().getDots().toString());
 		ArrayList<Point> solution = lns.busqueda(pcp.getSolution().getDots());
 		System.out.println("SOLUTION POINTS = " + solution);
