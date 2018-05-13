@@ -16,7 +16,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 public class GRASPAlgorithm extends Algorithm{
-	final static String salida = "";
+	final static String salida = "output";
 	/**
 	 * Entero que marca el tamaño de la lista de posibles candidatos
 	 */

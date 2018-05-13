@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Clase para la resolución de problemas de p-centro mediante Greedy Randomized Adaptative Search Procedure (GRASP)
  */
 public class BasicVNSAlgorithm extends Algorithm{
-	final static String salida = "";
+	final static String salida = "output";
 	
 	public BasicVNSAlgorithm(PCenterProblem pcp) {
 		super(pcp);

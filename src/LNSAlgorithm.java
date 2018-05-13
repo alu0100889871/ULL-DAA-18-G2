@@ -16,7 +16,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 public class LNSAlgorithm extends Algorithm{
-	final static String salida = "";
+	final static String salida = "output";
 	/**
 	 * M�todo constructor
 	 * @param pcp problema del p-centro a resolver

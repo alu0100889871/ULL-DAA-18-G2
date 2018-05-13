@@ -17,7 +17,7 @@ import java.util.Random;
  * Clase para la resolución de problemas de p-centro mediante Greedy Randomized Adaptative Search Procedure (GRASP)
  */
 public class TabuSearch extends Algorithm {
-	final static String salida = "";
+	final static String salida = "output";
 
 	private static final int DELAY = 10; //el tiempo que permanecen en tabú el contenido.
 	private static final int BEST = 500; //si lleva 500 iteraciones sin mejorar el coste global coge los nodos mas frecuentes (Intesificacion)

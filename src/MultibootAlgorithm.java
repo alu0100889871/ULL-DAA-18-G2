@@ -16,7 +16,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 public class MultibootAlgorithm extends Algorithm {
-	final static String salida = "";
+	final static String salida = "output";
 	private int bootTimes;
 	
 	/**

@@ -1,7 +1,12 @@
 
 public class Tester {
 	public static void main(String[] args) {
-		String[] rutas = {};
+		String[] rutas = {"../test/prueba10p3", "../test/prueba10p4", "../test/prueba10p5",
+						  "../test/prueba20p3", "../test/prueba20p4", "../test/prueba20p5",
+						  "../test/prueba30p3", "../test/prueba30p4", "../test/prueba30p5",
+						  "../test/prueba50p3", "../test/prueba50p4", "../test/prueba50p5",
+						  "../test/prueba70p3", "../test/prueba70p4", "../test/prueba70p5",
+						  "../test/prueba100p3", "../test/prueba100p4", "../test/prueba100p5"};
 			for(String ruta:rutas) {
 				String[] gaArgs = {ruta};
 				GreedyAlgorithm.main(gaArgs);

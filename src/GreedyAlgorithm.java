@@ -16,7 +16,7 @@ import java.nio.file.*;
 
 
 public class GreedyAlgorithm extends Algorithm{
-	final static String salida = "";
+	final static String salida = "output";
 	/**
 	 * Método constructor
 	 * @param pcp problema del p-centro a resolver
