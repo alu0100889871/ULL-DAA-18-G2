@@ -1,3 +1,6 @@
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 /**
  * 
@@ -12,6 +15,7 @@ import java.util.ArrayList;
  * Clase para la resolución de problemas de p-centro mediante Greedy Randomized Adaptative Search Procedure (GRASP)
  */
 public class BasicVNSAlgorithm extends Algorithm{
+	final static String salida = "";
 	
 	public BasicVNSAlgorithm(PCenterProblem pcp) {
 		super(pcp);
@@ -82,17 +86,23 @@ public class BasicVNSAlgorithm extends Algorithm{
 	//--------------------------------------TEST SECTION----------------------------------------//
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
-		PCenterProblem pcp = new PCenterProblem("C:\\Users\\norberto\\git\\ULL-DAA-18-G2\\test\\prueba.txt");
+		try {
+		PCenterProblem pcp = new PCenterProblem(args[0]);
 		BasicVNSAlgorithm bvnsa = new BasicVNSAlgorithm(pcp);
-		
+		long startTime = System.nanoTime();
 		ArrayList<Point> solution = bvnsa.resolve();
-		System.out.println("SOLUTION POINTS = " + solution);
-	   	System.out.println("OBJECTIVE FUNCTION = " + bvnsa.getPcp().funcionObjectivo(solution));
+		long endTime = System.nanoTime();
+		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + bvnsa.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
 	   	
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < bvnsa.getPcp().getSolution().getDots().size(); i++) {
 			locations.add(bvnsa.getPcp().getValues().getDots().indexOf(solution.get(i)));
 		}
-		System.out.println("INDEXES = " + locations);
+		Files.write(Paths.get(salida),("INDEXES = " + locations).getBytes(), StandardOpenOption.APPEND);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 }

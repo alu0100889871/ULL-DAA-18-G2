@@ -1,3 +1,6 @@
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -14,11 +17,11 @@ import java.util.Random;
  * Clase para la resolución de problemas de p-centro mediante Greedy Randomized Adaptative Search Procedure (GRASP)
  */
 public class TabuSearch extends Algorithm {
+	final static String salida = "";
 
 	private static final int DELAY = 10; //el tiempo que permanecen en tabú el contenido.
-	private static final int FIN = 1000; //constante que finaliza tabu
 	private static final int BEST = 500; //si lleva 500 iteraciones sin mejorar el coste global coge los nodos mas frecuentes (Intesificacion)
-	private static final int DIVER =200; //a los 200 no empezamos a penalizar los más frecuentes.
+	//private static final int DIVER = 200; //a los 200 no empezamos a penalizar los más frecuentes.
 	
 	/*
 	 * La busqueda tabu es un método de busqueda local que utiliza la memoria para
@@ -32,20 +35,21 @@ public class TabuSearch extends Algorithm {
 	 *
 	 */
 	
-
+	private int fin;
 	private ArrayList<TabuList> tabuServer_= new ArrayList<TabuList>(); //lista tabu los servicions
 	private ArrayList<TabuList> tabuClient_= new ArrayList<TabuList>();//lista tabú para los clientes.
 	private ArrayList<TabuList> frecuencia_= new ArrayList<TabuList>(); //frecuencia.
-	private int k_ = 0; //los k elementos de la solucion
+	//private int k_ = 0; //los k elementos de la solucion
 	private int size_ = 0; //tamanyo de los array
 	public double c_ = Double.MAX_VALUE; // coste optimo global (usado para el criterio de aspiracion).
 	private static int f_ = 0; // valor para comprobar si la funcion objetivo no mejora.
 	
 	
 	
-	public TabuSearch(PCenterProblem pcp) {
+	public TabuSearch(PCenterProblem pcp, int fin) {
+		
 		super(pcp);
-
+		this.fin = fin;
 		size_ = pcp.getValues().getDots().size(); // esto es el tamaño de los nodos totales ?
 		
 		for(int i = 0; i < size_; i++) //generamos la tabla a largo plazo 
@@ -92,7 +96,7 @@ public class TabuSearch extends Algorithm {
     	getPcp().getSolution().setDots(resultado);
 		//coste con el que comprobaremos el criterio de aspiracion
 		
-		while(w < FIN) // criterio de parada ?? aver esto con punto . funciona ??
+		while(w < fin) // criterio de parada ?? aver esto con punto . funciona ??
 		{
 			
 			if(f_ == BEST)
@@ -381,21 +385,6 @@ public class TabuSearch extends Algorithm {
 	
 	}
 	
-	
-	
-
-	
-	
-
-	
-
-	
-	
-
-
-	
-	
-	
 	/**
 	 * añade a la lista tabú de los clientes y los servidores 
 	 * @param servidor
@@ -421,10 +410,6 @@ public class TabuSearch extends Algorithm {
 		
 		
 	}
-
-
-
-
 
 	/**
 	 * checkea que el nodo i no esté tabú , a no ser que mejore el optimo global
@@ -475,8 +460,7 @@ public class TabuSearch extends Algorithm {
 		}*/
 		
 	}
-	
-	
+
 	/**
 	 * checkea el nodo i no esté tabú en clientes.
 	 * @param i
@@ -491,10 +475,7 @@ public class TabuSearch extends Algorithm {
 			return false;
 		}
 	}
-	
-	
 
-	
 	/*
 	 * 
 	 * 	GETTERS & SETTERS
@@ -511,9 +492,7 @@ public class TabuSearch extends Algorithm {
 	{
 		return tabuServer_;
 	}
-	
-	
-	
+
 
 	/**
 	 * funcion que modifica el nodo servidor tabú
@@ -552,10 +531,6 @@ public class TabuSearch extends Algorithm {
 		}
 		return false;
 	}
-
-
-
-
 
 	/**
 	 * funcion que devuelve el nodo cliente tabú
@@ -623,21 +598,25 @@ public class TabuSearch extends Algorithm {
 	//--------------------------------------TEST SECTION----------------------------------------//
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
-		PCenterProblem pcp = new PCenterProblem("C:\\Users\\norberto\\git\\ULL-DAA-18-G2\\test\\prueba3.txt");
-		TabuSearch lns = new TabuSearch(pcp);
+		try {
+		PCenterProblem pcp = new PCenterProblem(args[0]);
+		TabuSearch lns = new TabuSearch(pcp, Integer.parseInt(args[1]));
 		
-		System.out.println("puntos matrix " + pcp.getValues().getDots().toString());
+		Files.write(Paths.get(salida),("puntos matrix " + pcp.getValues().getDots().toString()).getBytes(), StandardOpenOption.APPEND);
 		//System.out.println("puntos solution " + pcp.getSolution().getDots().toString());
 		ArrayList<Point> solution = lns.busqueda(pcp.getSolution().getDots());
-		System.out.println("SOLUTION POINTS = " + solution);
-		System.out.println("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution));
-		System.out.println("factor f_ " + f_ );
+		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("factor f_ " + f_ ).getBytes(), StandardOpenOption.APPEND);
 		
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < lns.getPcp().getSolution().getDots().size(); i++) {
 			locations.add(lns.getPcp().getValues().getDots().indexOf(solution.get(i)));
 		}
-		System.out.println("INDEXES = " + locations);
+		Files.write(Paths.get(salida),("INDEXES = " + locations).getBytes(), StandardOpenOption.APPEND);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 
