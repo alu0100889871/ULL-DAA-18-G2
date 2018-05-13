@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public class TabuSearch extends Algorithm {
 
-	private static final int DELAY = 4; //el tiempo que permanecen en tabú el contenido.
+	private static final int DELAY = 10; //el tiempo que permanecen en tabú el contenido.
 	private static final int FIN = 1000; //constante que finaliza tabu
 	private static final int BEST = 500; //si lleva 500 iteraciones sin mejorar el coste global coge los nodos mas frecuentes (Intesificacion)
 	private static final int DIVER =200; //a los 200 no empezamos a penalizar los más frecuentes.
@@ -39,6 +39,7 @@ public class TabuSearch extends Algorithm {
 	private int k_ = 0; //los k elementos de la solucion
 	private int size_ = 0; //tamanyo de los array
 	public double c_ = Double.MAX_VALUE; // coste optimo global (usado para el criterio de aspiracion).
+	private static int f_ = 0; // valor para comprobar si la funcion objetivo no mejora.
 	
 	
 	
@@ -94,12 +95,23 @@ public class TabuSearch extends Algorithm {
 		while(w < FIN) // criterio de parada ?? aver esto con punto . funciona ??
 		{
 			
+			if(f_ == BEST)
+			{
+				resultado = SolucionFrecuente(getPcp().getSolution().getK());
+				resultado = LocalSearchTabu(resultado);
+				getPcp().getSolution().setBestFObj(getPcp().funcionObjectivo(resultado));
+		    	getPcp().getSolution().setDots(resultado);
+			}else
+			{
+				resultado = LocalSearchTabu(resultado);
+				getPcp().getSolution().setBestFObj(getPcp().funcionObjectivo(resultado));
+		    	getPcp().getSolution().setDots(resultado);
+			}
 			
-			//System.out.println("resultado  " + resultado.toString());//busqueda greedy con las condiciones de tabu.
-			resultado = LocalSearchTabu(resultado);
-			getPcp().getSolution().setBestFObj(getPcp().funcionObjectivo(resultado));
-	    	getPcp().getSolution().setDots(resultado);
 			
+
+	    	
+	    	
 			
 			w++;
 		}
@@ -109,7 +121,44 @@ public class TabuSearch extends Algorithm {
 	}
 	
 
+	/**
+	 * metodo que nos dara la solucion con los nodos mas frecuentes independientemente de si existen en tabu o no (intesificacion)
+	 * @param k
+	 * @return
+	 */
 	
+	private ArrayList<Point> SolucionFrecuente(int k) {
+		ArrayList<Point> aux = new ArrayList<Point>(); //array resultado a devolver
+		ArrayList<TabuList> tmp = new ArrayList<TabuList>(); //arrayList que copiara a las frecuencias.
+		tmp.addAll(getFrecuencia()); //compiamos la frecuencia tal cual
+		int val = Integer.MIN_VALUE; //valor para comparar siempre el nodo mas frecuente
+		int index= 0; //indice del nodo mas frecuente 
+		
+		
+		while(aux.size() < k) //bucle que no para hasta que sea aux igual a k
+		{
+		
+			for(int i = 0; i < tmp.size(); i++)
+			{
+				if(val < tmp.get(i).getCont())
+				{
+					index = i;
+					val = tmp.get(i).getCont();
+				}
+			}
+			
+			aux.add(tmp.get(index).getPoint());  // colocamos el nodo con mas frecuencia
+			tmp.remove(index); //removemos el nodo de mas valor de la tabla de frecuencia (de la copia) para seguir iterando
+			val = Integer.MIN_VALUE; //inicializamos val para la siguiente comprobacion.
+		
+		}
+		return aux;
+	}
+
+
+
+
+
 	/**
 	 * funcion que devuelve una solucion aleatoria de tamanyo k
 	 * @param k
@@ -176,7 +225,7 @@ public class TabuSearch extends Algorithm {
 			actualSolution = new ArrayList<Point>();
 			actualSolution.addAll(initialSolution);
 			
-			for(int j = 0; j < client.size(); j++)
+			for(int j = 0; j < client.size(); j++) //aqui comparamos cada nodo cliente con cada nodo servicio.
 			{
 				//System.out.println("ClientIndex " + client.get(j));
 
@@ -208,9 +257,14 @@ public class TabuSearch extends Algorithm {
 		//System.out.println("#solucion improvisada-> " + actualSolution.toString());
 		decrementar();
 
+		if(c_ < getPcp().funcionObjectivo(actualSolution))
+		{
+			f_++;//si no mejora iteramos uno en ese momento
+		}
 		if(actualSolution.toString().equals(initialSolution.toString()))
 		{
 			System.out.println("no mejora ");
+			 
 			return initialSolution;
 		}else
 		{
@@ -511,6 +565,7 @@ public class TabuSearch extends Algorithm {
 		ArrayList<Point> solution = lns.busqueda(pcp.getSolution().getDots());
 		System.out.println("SOLUTION POINTS = " + solution);
 		System.out.println("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution));
+		System.out.println("factor f_ " + f_ );
 		
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < lns.getPcp().getSolution().getDots().size(); i++) {
