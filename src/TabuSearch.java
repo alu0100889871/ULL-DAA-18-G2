@@ -97,7 +97,7 @@ public class TabuSearch extends Algorithm {
 			
 			if(f_ == BEST)
 			{
-				resultado = SolucionFrecuente(getPcp().getSolution().getK());
+				resultado = solucionFrecuente(getPcp().getSolution().getK());
 				resultado = LocalSearchTabu(resultado);
 				getPcp().getSolution().setBestFObj(getPcp().funcionObjectivo(resultado));
 		    	getPcp().getSolution().setDots(resultado);
@@ -127,7 +127,7 @@ public class TabuSearch extends Algorithm {
 	 * @return
 	 */
 	
-	private ArrayList<Point> SolucionFrecuente(int k) {
+	private ArrayList<Point> solucionFrecuente(int k) {
 		ArrayList<Point> aux = new ArrayList<Point>(); //array resultado a devolver
 		ArrayList<TabuList> tmp = new ArrayList<TabuList>(); //arrayList que copiara a las frecuencias.
 		tmp.addAll(getFrecuencia()); //compiamos la frecuencia tal cual
@@ -202,6 +202,9 @@ public class TabuSearch extends Algorithm {
 		client.addAll( getPcp().getValues().getDots());
 
 		client.removeAll(initialSolution); //dejamos los clientes para compararlos.
+		
+		//client = chooseRandomClient(client);
+		
 		System.out.println("#################################");
 		System.out.println("initialSolved-> " + initialSolution.toString());
 		System.out.println("Tabu server-> " + getServer().toString());
@@ -304,8 +307,54 @@ public class TabuSearch extends Algorithm {
 	}
 
 
+	/**
+	 * metodo para devolver un porcentaje de los nodos clientes (conseguiremos randomizar )
+	 * @param aux
+	 */
+	public ArrayList<Point> chooseRandomClient(ArrayList<Point> aux)
+	{
+		/*
+		 * la idea es que coja un 50% de los nodos clientes y que priorize los que menos frecuencia tienen
+		 */
+		
+		ArrayList<Point> tmp = new ArrayList<Point>(); //generamos la particion 
 
+		
+		
+		
+	  int k = aux.size(); //tamanyo de los clientes
+	  
+	  k = k /2; // cogemos el 50% de los datos
+	 int c = k;// no puede valer 0 (cogemos 25% de los datos los menos frecuentes y 25% de los clientes random)
+	 
+	  int val = Integer.MAX_VALUE;
+	  int index = 0;
+	 
+	  while(tmp.size() < c)
+	  {
+	  
+	 for(int i = 0; i < aux.size() ; i++)
+	 {
+		if(val > obtenerFrecuencia(aux.get(i)))
+		{
+			val = obtenerFrecuencia(aux.get(i)); //ponemos el valor del contador para seguir comparando
+			index = i; //indice que add al final del for
+		}
+	 }
+	 
+	 tmp.add(aux.get(index));
+	 aux.remove(index);
+	 
+	  }
+	 
+	 
+	 
+	 
+	 
+	 
+	 return tmp;
 
+	}
 
 	/**
 	 * funcion que decrementa las listas tabu a 0 ( memoria a corto plazo)
@@ -551,7 +600,24 @@ public class TabuSearch extends Algorithm {
 		frecuencia_.add(aux);
 	}
 	
+	/**
+	 * metodo para
+	 * @param args
+	 */
 	
+	public Integer obtenerFrecuencia(Point val)
+	{
+		for(int i = 0; i < frecuencia_.size(); i++)
+		{
+			if((frecuencia_.get(i).getPoint().getX() == val.getX()) &&  (frecuencia_.get(i).getPoint().getY() == val.getY()))
+			{
+				return frecuencia_.get(i).getCont();
+			}
+		}
+		
+		System.err.println("no existe");
+		return -1;
+	}
 	
 	//------------------------------------------------------------------------------------------//
 	//--------------------------------------TEST SECTION----------------------------------------//
