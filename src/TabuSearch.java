@@ -203,13 +203,13 @@ public class TabuSearch extends Algorithm {
 
 		client.removeAll(initialSolution); //dejamos los clientes para compararlos.
 		
-		//client = chooseRandomClient(client);
+		client = chooseRandomClient(client);
 		
-		System.out.println("#################################");
-		System.out.println("initialSolved-> " + initialSolution.toString());
-		System.out.println("Tabu server-> " + getServer().toString());
-		System.out.println("tabla frecuencia-> " + getFrecuencia().toString());
-		System.out.println("#################################");
+		//System.out.println("#################################");
+		//System.out.println("initialSolved-> " + initialSolution.toString());
+		//System.out.println("Tabu server-> " + getServer().toString());
+		//System.out.println("tabla frecuencia-> " + getFrecuencia().toString());
+		//System.out.println("#################################");
 		//System.out.println("client " + client.toString());
 		
 		
@@ -266,7 +266,7 @@ public class TabuSearch extends Algorithm {
 		}
 		if(actualSolution.toString().equals(initialSolution.toString()))
 		{
-			System.out.println("no mejora ");
+			//System.out.println("no mejora ");
 			 
 			return initialSolution;
 		}else
@@ -289,12 +289,12 @@ public class TabuSearch extends Algorithm {
 		ArrayList<Point> aux = new ArrayList<Point>();
 				aux.addAll(initialSolution);
 		
-		System.out.println("initial tabu-> " + initialSolution.toString());
-		System.out.println("actual tabu-> " + actualSolution.toString());
+		//System.out.println("initial tabu-> " + initialSolution.toString());
+		//System.out.println("actual tabu-> " + actualSolution.toString());
 	
 		
 		aux.removeAll(actualSolution);
-		System.out.println("auxiliar tabu-> " + aux.toString());
+		//System.out.println("auxiliar tabu-> " + aux.toString());
 		
 		if(aux.size() == 1)
 		{
@@ -335,6 +335,8 @@ public class TabuSearch extends Algorithm {
 	  
 	 for(int i = 0; i < aux.size() ; i++)
 	 {
+
+
 		if(val > obtenerFrecuencia(aux.get(i)))
 		{
 			val = obtenerFrecuencia(aux.get(i)); //ponemos el valor del contador para seguir comparando
@@ -344,6 +346,7 @@ public class TabuSearch extends Algorithm {
 	 
 	 tmp.add(aux.get(index));
 	 aux.remove(index);
+	 index = 0;
 	 
 	  }
 	 
