@@ -326,7 +326,7 @@ public class TabuSearch extends Algorithm {
 	  int k = aux.size(); //tamanyo de los clientes
 	  
 	  k = k /2; // cogemos el 50% de los datos
-	 int c = k;// no puede valer 0 (cogemos 25% de los datos los menos frecuentes y 25% de los clientes random)
+	 int c = k/2;// no puede valer 0 (cogemos 25% de los datos los menos frecuentes y 25% de los clientes random)
 	 
 	  int val = Integer.MAX_VALUE;
 	  int index = 0;
@@ -349,6 +349,21 @@ public class TabuSearch extends Algorithm {
 	 aux.remove(index);
 	 index = 0;
 	 
+	  }
+	  
+	  
+	  /*
+	   * 
+	   * 25% lo escogemos random.
+	   */
+	  while(tmp.size() < k )
+	  {
+		  Random r1 = new Random();
+		  index = r1.nextInt(aux.size());
+		  
+		   tmp.add(aux.get(index));
+		   aux.remove(index);
+		   index = 0;
 	  }
 	 
 	 
