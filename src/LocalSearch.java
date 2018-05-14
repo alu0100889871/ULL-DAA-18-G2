@@ -38,7 +38,7 @@ public class LocalSearch{
 		Random r = new Random();
 		int i = 0; //indice del bucle
 		ArrayList<Integer> candidatos = new ArrayList<Integer>(); // nodos candidatos
-		ArrayList<Integer> tmp = new ArrayList<Integer>();
+		//ArrayList<Integer> tmp = new ArrayList<Integer>();
 		
 		candidatos = diferencia(service,solucion);
 

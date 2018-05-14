@@ -10,9 +10,13 @@
  * 
  * Clase para la resoluci�n de problemas de p-centro mediante LNS
  */
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 public class LNSAlgorithm extends Algorithm{
+	final static String salida = "output";
 	/**
 	 * M�todo constructor
 	 * @param pcp problema del p-centro a resolver
@@ -72,7 +76,7 @@ public class LNSAlgorithm extends Algorithm{
 				} else {
 					k = k + 1;
 				}
-			} while(k < getPcp().getSolution().getK() && actualSolution.size() < getPcp().getSolution().getK());
+			} while(k < 5 && actualSolution.size() < getPcp().getSolution().getK());
 		} while(actualSolution.size() < getPcp().getSolution().getK());
 		getPcp().getSolution().setBestFObj(getPcp().funcionObjectivo(actualSolution));
 		getPcp().getSolution().setDots(actualSolution);
@@ -83,16 +87,20 @@ public class LNSAlgorithm extends Algorithm{
 	//--------------------------------------TEST SECTION----------------------------------------//
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
+		try {
 		PCenterProblem pcp = new PCenterProblem(args[0]);
 		LNSAlgorithm lns = new LNSAlgorithm(pcp);
 		ArrayList<Point> solution = lns.resolve(3);
-		System.out.println("SOLUTION POINTS = " + solution);
-		System.out.println("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution));
+		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
 		
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < lns.getPcp().getSolution().getDots().size(); i++) {
 			locations.add(lns.getPcp().getValues().getDots().indexOf(solution.get(i)));
 		}
-		System.out.println("INDEXES = " + locations);
+		Files.write(Paths.get(salida),("INDEXES = " + locations).getBytes(), StandardOpenOption.APPEND);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 }
