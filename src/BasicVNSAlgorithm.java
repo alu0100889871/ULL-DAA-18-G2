@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Clase para la resolución de problemas de p-centro mediante Greedy Randomized Adaptative Search Procedure (GRASP)
  */
 public class BasicVNSAlgorithm extends Algorithm{
-	final static String salida = "output";
+	final static String salida = "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\src\\vnsoutput";
 	
 	public BasicVNSAlgorithm(PCenterProblem pcp) {
 		super(pcp);
@@ -87,14 +87,15 @@ public class BasicVNSAlgorithm extends Algorithm{
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
 		try {
+		Files.write(Paths.get(salida),("Prueba sobre " + args[0] + " con algoritmo VNS\n").getBytes(), StandardOpenOption.APPEND);
 		PCenterProblem pcp = new PCenterProblem(args[0]);
 		BasicVNSAlgorithm bvnsa = new BasicVNSAlgorithm(pcp);
 		long startTime = System.nanoTime();
 		ArrayList<Point> solution = bvnsa.resolve();
 		long endTime = System.nanoTime();
-		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.").getBytes(), StandardOpenOption.APPEND);
-		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
-		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + bvnsa.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.\n").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution + "\n").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + bvnsa.getPcp().funcionObjectivo(solution) + "\n").getBytes(), StandardOpenOption.APPEND);
 	   	
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < bvnsa.getPcp().getSolution().getDots().size(); i++) {

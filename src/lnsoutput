@@ -1,0 +1,21 @@
+Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p3 con algoritmo LNS
+Ha tardado 300932 ns.
+SOLUTION POINTS = [(33, 49), (171, 1), (23, 184)]
+OBJECTIVE FUNCTION = 81.6333265278342
+INDEXES = [6, 5, 3]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p4 con algoritmo LNS
+Ha tardado 222395 ns.
+SOLUTION POINTS = [(171, 1), (35, 77), (23, 184), (114, 40)]
+OBJECTIVE FUNCTION = 34.438350715445125
+INDEXES = [5, 9, 3, 0]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p5 con algoritmo LNS
+Ha tardado 172555 ns.
+SOLUTION POINTS = [(33, 49), (171, 1), (114, 40), (23, 184), (129, 71)]
+OBJECTIVE FUNCTION = 34.132096331752024
+INDEXES = [6, 5, 0, 3, 1]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p3 con algoritmo LNS
+Ha tardado 187658 ns.
+SOLUTION POINTS = [(149, 173), (103, 24), (26, 136)]
+OBJECTIVE FUNCTION = 91.35097153287424
+INDEXES = [9, 2, 16]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p4 con algoritmo LNS
+Ha tardado 508602 ns.
+SOLUTION POINTS = [(103, 24), (75, 151), (195, 193), (178, 1)]
+OBJECTIVE FUNCTION = 73.7563556583431
+INDEXES = [2, 11, 8, 10]

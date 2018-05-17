@@ -1,0 +1,121 @@
+Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p3 con algoritmo Multiboot con 2 repeticiones y RCLSize 5
+Ha tardado 2228483 ns.
+SOLUTION POINTS = [(47, 62), (114, 40), (23, 184)]
+OBJECTIVE FUNCTION = 69.06518659932803
+INDEXES = [8, 0, 3]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p3 con algoritmo Multiboot con 2 repeticiones y RCLSize 10
+Ha tardado 1367598 ns.
+SOLUTION POINTS = [(33, 49), (166, 30), (23, 184)]
+OBJECTIVE FUNCTION = 56.0357029044876
+INDEXES = [6, 4, 3]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p3 con algoritmo Multiboot con 2 repeticiones y RCLSize 20
+Ha tardado 1229781 ns.
+SOLUTION POINTS = [(166, 30), (35, 77), (23, 184)]
+OBJECTIVE FUNCTION = 59.93329625508679
+INDEXES = [4, 9, 3]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p3 con algoritmo Multiboot con 3 repeticiones y RCLSize 5
+Ha tardado 2034029 ns.
+SOLUTION POINTS = [(143, 22), (35, 77), (23, 184)]
+OBJECTIVE FUNCTION = 59.93329625508679
+INDEXES = [2, 9, 3]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p3 con algoritmo Multiboot con 3 repeticiones y RCLSize 10
+Ha tardado 678891 ns.
+SOLUTION POINTS = [(89, 51), (23, 184), (143, 22)]
+OBJECTIVE FUNCTION = 59.93329625508679
+INDEXES = [7, 3, 2]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p3 con algoritmo Multiboot con 3 repeticiones y RCLSize 20
+Ha tardado 1204861 ns.
+SOLUTION POINTS = [(89, 51), (23, 184), (143, 22)]
+OBJECTIVE FUNCTION = 59.93329625508679
+INDEXES = [7, 3, 2]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p4 con algoritmo Multiboot con 2 repeticiones y RCLSize 5
+Ha tardado 435729 ns.
+SOLUTION POINTS = [(171, 1), (35, 77), (23, 184), (114, 40)]
+OBJECTIVE FUNCTION = 34.438350715445125
+INDEXES = [5, 9, 3, 0]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p4 con algoritmo Multiboot con 2 repeticiones y RCLSize 10
+Ha tardado 468200 ns.
+SOLUTION POINTS = [(47, 62), (114, 40), (23, 184), (166, 30)]
+OBJECTIVE FUNCTION = 34.438350715445125
+INDEXES = [8, 0, 3, 4]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p4 con algoritmo Multiboot con 2 repeticiones y RCLSize 20
+Ha tardado 737416 ns.
+SOLUTION POINTS = [(166, 30), (35, 77), (23, 184), (114, 40)]
+OBJECTIVE FUNCTION = 34.438350715445125
+INDEXES = [4, 9, 3, 0]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p4 con algoritmo Multiboot con 3 repeticiones y RCLSize 5
+Ha tardado 817085 ns.
+SOLUTION POINTS = [(114, 40), (33, 49), (23, 184), (166, 30)]
+OBJECTIVE FUNCTION = 34.438350715445125
+INDEXES = [0, 6, 3, 4]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p4 con algoritmo Multiboot con 3 repeticiones y RCLSize 10
+Ha tardado 739681 ns.
+SOLUTION POINTS = [(33, 49), (114, 40), (23, 184), (166, 30)]
+OBJECTIVE FUNCTION = 34.438350715445125
+INDEXES = [6, 0, 3, 4]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p4 con algoritmo Multiboot con 3 repeticiones y RCLSize 20
+Ha tardado 642643 ns.
+SOLUTION POINTS = [(47, 62), (114, 40), (23, 184), (171, 1)]
+OBJECTIVE FUNCTION = 34.438350715445125
+INDEXES = [8, 0, 3, 5]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p5 con algoritmo Multiboot con 2 repeticiones y RCLSize 5
+Ha tardado 541451 ns.
+SOLUTION POINTS = [(166, 30), (35, 77), (23, 184), (114, 40), (129, 71)]
+OBJECTIVE FUNCTION = 29.427877939124322
+INDEXES = [4, 9, 3, 0, 1]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p5 con algoritmo Multiboot con 2 repeticiones y RCLSize 10
+Ha tardado 631316 ns.
+SOLUTION POINTS = [(33, 49), (23, 184), (166, 30), (114, 40), (129, 71)]
+OBJECTIVE FUNCTION = 29.427877939124322
+INDEXES = [6, 3, 4, 0, 1]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p5 con algoritmo Multiboot con 2 repeticiones y RCLSize 20
+Ha tardado 527859 ns.
+SOLUTION POINTS = [(129, 71), (23, 184), (33, 49), (143, 22), (114, 40)]
+OBJECTIVE FUNCTION = 35.0
+INDEXES = [1, 3, 6, 2, 0]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p5 con algoritmo Multiboot con 3 repeticiones y RCLSize 5
+Ha tardado 623009 ns.
+SOLUTION POINTS = [(35, 77), (23, 184), (114, 40), (171, 1), (129, 71)]
+OBJECTIVE FUNCTION = 34.132096331752024
+INDEXES = [9, 3, 0, 5, 1]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p5 con algoritmo Multiboot con 3 repeticiones y RCLSize 10
+Ha tardado 664165 ns.
+SOLUTION POINTS = [(47, 62), (166, 30), (23, 184), (114, 40), (129, 71)]
+OBJECTIVE FUNCTION = 29.427877939124322
+INDEXES = [8, 4, 3, 0, 1]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test10p5 con algoritmo Multiboot con 3 repeticiones y RCLSize 20
+Ha tardado 753274 ns.
+SOLUTION POINTS = [(23, 184), (33, 49), (166, 30), (114, 40), (129, 71)]
+OBJECTIVE FUNCTION = 29.427877939124322
+INDEXES = [3, 6, 4, 0, 1]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p3 con algoritmo Multiboot con 2 repeticiones y RCLSize 5
+Ha tardado 1342300 ns.
+SOLUTION POINTS = [(186, 122), (71, 138), (155, 36)]
+OBJECTIVE FUNCTION = 71.56814934033156
+INDEXES = [0, 17, 5]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p3 con algoritmo Multiboot con 2 repeticiones y RCLSize 10
+Ha tardado 904306 ns.
+SOLUTION POINTS = [(75, 151), (179, 121), (155, 36)]
+OBJECTIVE FUNCTION = 73.7563556583431
+INDEXES = [11, 18, 5]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p3 con algoritmo Multiboot con 2 repeticiones y RCLSize 20
+Ha tardado 950749 ns.
+SOLUTION POINTS = [(162, 132), (16, 112), (155, 36)]
+OBJECTIVE FUNCTION = 73.55270219373317
+INDEXES = [4, 3, 5]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p3 con algoritmo Multiboot con 3 repeticiones y RCLSize 5
+Ha tardado 1665510 ns.
+SOLUTION POINTS = [(25, 185), (179, 121), (155, 36)]
+OBJECTIVE FUNCTION = 73.7563556583431
+INDEXES = [15, 18, 5]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p3 con algoritmo Multiboot con 3 repeticiones y RCLSize 10
+Ha tardado 917144 ns.
+SOLUTION POINTS = [(162, 132), (16, 112), (155, 36)]
+OBJECTIVE FUNCTION = 73.55270219373317
+INDEXES = [4, 3, 5]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p3 con algoritmo Multiboot con 3 repeticiones y RCLSize 20
+Ha tardado 1337014 ns.
+SOLUTION POINTS = [(75, 151), (179, 121), (155, 36)]
+OBJECTIVE FUNCTION = 73.7563556583431
+INDEXES = [11, 18, 5]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p4 con algoritmo Multiboot con 2 repeticiones y RCLSize 5
+Ha tardado 1579799 ns.
+SOLUTION POINTS = [(179, 121), (155, 36), (26, 136), (175, 191)]
+OBJECTIVE FUNCTION = 53.36665625650534
+INDEXES = [18, 5, 16, 6]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p4 con algoritmo Multiboot con 2 repeticiones y RCLSize 10
+Ha tardado 2037427 ns.
+SOLUTION POINTS = [(111, 27), (75, 151), (186, 122), (194, 16)]
+OBJECTIVE FUNCTION = 71.56814934033156
+INDEXES = [12, 11, 0, 1]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p4 con algoritmo Multiboot con 2 repeticiones y RCLSize 20
+Ha tardado 1572247 ns.
+SOLUTION POINTS = [(178, 1), (75, 151), (186, 122), (103, 24)]
+OBJECTIVE FUNCTION = 71.56814934033156
+INDEXES = [10, 11, 0, 2]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p4 con algoritmo Multiboot con 3 repeticiones y RCLSize 5
+Ha tardado 1853545 ns.
+SOLUTION POINTS = [(26, 136), (179, 121), (155, 36), (149, 173)]
+OBJECTIVE FUNCTION = 53.36665625650534
+INDEXES = [16, 18, 5, 9]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p4 con algoritmo Multiboot con 3 repeticiones y RCLSize 10
+Ha tardado 1986077 ns.
+SOLUTION POINTS = [(178, 1), (75, 151), (186, 122), (103, 24)]
+OBJECTIVE FUNCTION = 71.56814934033156
+INDEXES = [10, 11, 0, 2]Prueba sobre C:\Users\gamea\git\ULL-DAA-18-G2\test\test20p4 con algoritmo Multiboot con 3 repeticiones y RCLSize 20
+Ha tardado 2270395 ns.
+SOLUTION POINTS = [(26, 136), (179, 121), (155, 36), (175, 191)]
+OBJECTIVE FUNCTION = 53.36665625650534
+INDEXES = [16, 18, 5, 6]

@@ -16,7 +16,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 public class LNSAlgorithm extends Algorithm{
-	final static String salida = "output";
+	final static String salida = "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\src\\lnsoutput";
 	/**
 	 * M�todo constructor
 	 * @param pcp problema del p-centro a resolver
@@ -88,11 +88,15 @@ public class LNSAlgorithm extends Algorithm{
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
 		try {
+		Files.write(Paths.get(salida),("Prueba sobre " + args[0] + " con algoritmo LNS\n").getBytes(), StandardOpenOption.APPEND);
 		PCenterProblem pcp = new PCenterProblem(args[0]);
 		LNSAlgorithm lns = new LNSAlgorithm(pcp);
+		long startTime = System.nanoTime();
 		ArrayList<Point> solution = lns.resolve(3);
-		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
-		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
+		long endTime = System.nanoTime();
+		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.\n").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution + "\n").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution) + "\n").getBytes(), StandardOpenOption.APPEND);
 		
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < lns.getPcp().getSolution().getDots().size(); i++) {

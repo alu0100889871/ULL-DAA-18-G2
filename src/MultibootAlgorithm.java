@@ -16,7 +16,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 public class MultibootAlgorithm extends Algorithm {
-	final static String salida = "output";
+	final static String salida = "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\src\\multibootoutput";
 	private int bootTimes;
 	
 	/**
@@ -62,15 +62,16 @@ public class MultibootAlgorithm extends Algorithm {
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
 		try {
+		Files.write(Paths.get(salida),("Prueba sobre " + args[0] + " con algoritmo Multiboot con " + args[1] + " repeticiones y RCLSize " + args[2] + "\n").getBytes(), StandardOpenOption.APPEND);
 		PCenterProblem pcp = new PCenterProblem(args[0]);
 		MultibootAlgorithm mba = new MultibootAlgorithm(pcp, Integer.parseInt(args[1]));
 		
 		long startTime = System.nanoTime();
 		ArrayList<Point> solution = mba.resolve(Integer.parseInt(args[2]));
 		long endTime = System.nanoTime();
-		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.").getBytes(), StandardOpenOption.APPEND);
-		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
-		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + mba.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.\n").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution + "\n").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + mba.getPcp().funcionObjectivo(solution) + "\n").getBytes(), StandardOpenOption.APPEND);
     	
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < mba.getPcp().getSolution().getDots().size(); i++) {

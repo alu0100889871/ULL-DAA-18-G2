@@ -1,12 +1,12 @@
 
 public class Tester {
 	public static void main(String[] args) {
-		String[] rutas = {"../test/prueba10p3", "../test/prueba10p4", "../test/prueba10p5",
-						  "../test/prueba20p3", "../test/prueba20p4", "../test/prueba20p5",
-						  "../test/prueba30p3", "../test/prueba30p4", "../test/prueba30p5",
-						  "../test/prueba50p3", "../test/prueba50p4", "../test/prueba50p5",
-						  "../test/prueba70p3", "../test/prueba70p4", "../test/prueba70p5",
-						  "../test/prueba100p3", "../test/prueba100p4", "../test/prueba100p5"};
+		String[] rutas = {"C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test10p3", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test10p4", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test10p5",
+						  "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test20p3", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test20p4", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test20p5",
+						  "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test30p3", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test30p4", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test30p5",
+						  "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test50p3", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test50p4", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test50p5",
+						  "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test70p3", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test70p4", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test70p5",
+						  "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test100p3", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test100p4", "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\test\\test100p5"};
 			for(String ruta:rutas) {
 				String[] gaArgs = {ruta};
 				GreedyAlgorithm.main(gaArgs);

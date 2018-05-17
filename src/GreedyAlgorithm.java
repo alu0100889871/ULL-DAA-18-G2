@@ -16,7 +16,7 @@ import java.nio.file.*;
 
 
 public class GreedyAlgorithm extends Algorithm{
-	final static String salida = "output";
+	final static String salida = "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\src\\greedyoutput";
 	/**
 	 * Método constructor
 	 * @param pcp problema del p-centro a resolver
@@ -63,15 +63,16 @@ public class GreedyAlgorithm extends Algorithm{
   	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
 		try {
+		Files.write(Paths.get(salida),("Prueba sobre " + args[0] + " con algoritmo Greedy\n").getBytes(), StandardOpenOption.APPEND);
 		PCenterProblem pcp = new PCenterProblem(args[0]);
 		GreedyAlgorithm ga = new GreedyAlgorithm(pcp);
 		//ArrayList<Point> solution = ga.resolve();
 		long startTime = System.nanoTime();
 		ArrayList<Point> solution = ga.resolve2();
 		long endTime = System.nanoTime();
-        Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.").getBytes(), StandardOpenOption.APPEND);
-        Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
-        Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + ga.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
+        Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.\n").getBytes(), StandardOpenOption.APPEND);
+        Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution + "\n").getBytes(), StandardOpenOption.APPEND);
+        Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + ga.getPcp().funcionObjectivo(solution) + "\n").getBytes(), StandardOpenOption.APPEND);
     	
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < ga.getPcp().getSolution().getDots().size(); i++) {

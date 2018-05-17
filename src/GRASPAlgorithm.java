@@ -16,7 +16,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 public class GRASPAlgorithm extends Algorithm{
-	final static String salida = "output";
+	final static String salida = "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\src\\graspoutput";
 	/**
 	 * Entero que marca el tamaño de la lista de posibles candidatos
 	 */
@@ -99,14 +99,15 @@ public class GRASPAlgorithm extends Algorithm{
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
 		try {
+			Files.write(Paths.get(salida),("Prueba sobre " + args[0] + " con algoritmo Grasp y RCLSize = " + args[1] + "\n").getBytes(), StandardOpenOption.APPEND);
 		PCenterProblem pcp = new PCenterProblem(args[0]);
 		GRASPAlgorithm ga = new GRASPAlgorithm(pcp, Integer.parseInt(args[1]));
 		long startTime = System.nanoTime();
 		ArrayList<Point> solution = ga.resolve();
 		long endTime = System.nanoTime();
-		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.").getBytes(), StandardOpenOption.APPEND);
-		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
-		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + ga.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.\n").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution + "\n").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + ga.getPcp().funcionObjectivo(solution) + "\n").getBytes(), StandardOpenOption.APPEND);
     	
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < ga.getPcp().getSolution().getDots().size(); i++) {

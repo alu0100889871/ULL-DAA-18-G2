@@ -1,4 +1,7 @@
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,7 +18,7 @@ import java.util.Random;
  * Clase para la resolución de problemas de p-centro mediante Greedy Randomized Adaptative Search Procedure (GRASP)
  */
 public class TabuSearch extends Algorithm {
-
+	final static String salida = "C:\\Users\\gamea\\git\\ULL-DAA-18-G2\\src\\tabuoutput";
 	private static final int DELAY = 10; //el tiempo que permanecen en tabú el contenido.
 	private static final int FIN = 1000; //constante que finaliza tabu
 	private static final int BEST = 500; //si lleva 500 iteraciones sin mejorar el coste global coge los nodos mas frecuentes (Intesificacion)
@@ -642,21 +645,28 @@ public class TabuSearch extends Algorithm {
 	//--------------------------------------TEST SECTION----------------------------------------//
 	//------------------------------------------------------------------------------------------//
 	public static void main(String args[]) {
-		PCenterProblem pcp = new PCenterProblem("C:\\Users\\norberto\\git\\ULL-DAA-18-G2\\test\\prueba3.txt");
+		try {
+		Files.write(Paths.get(salida),("Prueba sobre " + args[0] + " con algoritmo Tabu\n").getBytes(), StandardOpenOption.APPEND);
+		PCenterProblem pcp = new PCenterProblem(args[0]);
 		TabuSearch lns = new TabuSearch(pcp);
 		
 		System.out.println("puntos matrix " + pcp.getValues().getDots().toString());
 		//System.out.println("puntos solution " + pcp.getSolution().getDots().toString());
+		long startTime = System.nanoTime();
 		ArrayList<Point> solution = lns.busqueda(pcp.getSolution().getDots());
-		System.out.println("SOLUTION POINTS = " + solution);
-		System.out.println("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution));
-		System.out.println("factor f_ " + f_ );
+		long endTime = System.nanoTime();
+		Files.write(Paths.get(salida),("Ha tardado " + (endTime - startTime) + " ns.").getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("SOLUTION POINTS = " + solution).getBytes(), StandardOpenOption.APPEND);
+		Files.write(Paths.get(salida),("OBJECTIVE FUNCTION = " + lns.getPcp().funcionObjectivo(solution)).getBytes(), StandardOpenOption.APPEND);
 		
 		ArrayList<Integer> locations = new ArrayList<Integer>();
 		for(int i = 0; i < lns.getPcp().getSolution().getDots().size(); i++) {
 			locations.add(lns.getPcp().getValues().getDots().indexOf(solution.get(i)));
 		}
 		System.out.println("INDEXES = " + locations);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 
